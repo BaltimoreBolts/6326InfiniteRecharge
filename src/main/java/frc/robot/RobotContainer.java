@@ -10,8 +10,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Harvester;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.GPM;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.OIConstants;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants.Controller;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -22,9 +30,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveTrain roboDT = new DriveTrain();
+  private final Harvester roboHarvest = new Harvester();
+  private final Indexer roboIndex = new Indexer();
+  private final Shooter roboShoot = new Shooter();
+  private final GPM roboGPM = new GPM();
+
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  private XboxController driver = new XboxController(OIConstants.DRIVER_CONTROLLER);
 
 
   /**
@@ -33,8 +47,13 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-  }
 
+    // Set default drive command
+    roboDT.setDefaultCommand(
+      new RunCommand(() -> roboDT
+        .arcadeDrive(driver.getRawAxis(Controller.XBOX.STICK.LEFT.X), 
+        driver.getRawAxis(Controller.XBOX.STICK.LEFT.Y)), roboDT));
+  }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
