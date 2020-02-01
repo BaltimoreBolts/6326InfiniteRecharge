@@ -6,30 +6,30 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
+import com.revrobotics.CANEncoder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.HangerConstants;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.HarvesterConstants;
+public class Hanger extends SubsystemBase {
+  public CANSparkMax hangerPlutoMotor;
+CANEncoder hangerEncoder;
 
-public class Harvester extends SubsystemBase {
-  CANSparkMax harvesterMickeyMotor;
-  CANSparkMax harvesterMinnieMotor;
-  DigitalInput LimitSwitch0;
-  
   /**
-   * Creates a new Harvester.
+   * Creates a new Hanger.
    */
-  public Harvester() {
-    harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
-    harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
-    LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
+  public Hanger() {
+    hangerPlutoMotor = new CANSparkMax (HangerConstants.HANGER_MOTOR_PLUTO, MotorType.kBrushed);
+    hangerEncoder = hangerPlutoMotor.getEncoder();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Hanger Encoder positions",hangerEncoder.getPosition());
   }
 }

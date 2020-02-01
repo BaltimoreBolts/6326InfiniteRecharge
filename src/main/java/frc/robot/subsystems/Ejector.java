@@ -7,25 +7,19 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.EjectorConstants;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.HarvesterConstants;
-
-public class Harvester extends SubsystemBase {
-  CANSparkMax harvesterMickeyMotor;
-  CANSparkMax harvesterMinnieMotor;
-  DigitalInput LimitSwitch0;
-  
+public class Ejector extends SubsystemBase {
+  CANSparkMax ejectorDaisyMotor;
   /**
-   * Creates a new Harvester.
+   * Creates a new Ejector.
    */
-  public Harvester() {
-    harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
-    harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
-    LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
+  public Ejector() {
+    ejectorDaisyMotor = new CANSparkMax(EjectorConstants.EJECTOR_MOTOR_DAISY, MotorType.kBrushless);
   }
 
   @Override

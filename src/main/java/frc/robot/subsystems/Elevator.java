@@ -7,29 +7,28 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ElevatorConstants;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.HarvesterConstants;
-
-public class Harvester extends SubsystemBase {
-  CANSparkMax harvesterMickeyMotor;
-  CANSparkMax harvesterMinnieMotor;
-  DigitalInput LimitSwitch0;
-  
+public class Elevator extends SubsystemBase {
+  public CANSparkMax ElevatorGoofyMotor;
+  CANEncoder elevatorEncoder;
   /**
-   * Creates a new Harvester.
+   * Creates a new Elevator.
    */
-  public Harvester() {
-    harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
-    harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
-    LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
+  public Elevator() {
+    ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushless);
+    elevatorEncoder = ElevatorGoofyMotor.getAlternateEncoder();
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("elvator position encoder", elevatorEncoder.getPosition());
     // This method will be called once per scheduler run
   }
 }

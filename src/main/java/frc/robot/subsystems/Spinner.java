@@ -7,25 +7,19 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.SpinnerConstants;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.HarvesterConstants;
-
-public class Harvester extends SubsystemBase {
-  CANSparkMax harvesterMickeyMotor;
-  CANSparkMax harvesterMinnieMotor;
-  DigitalInput LimitSwitch0;
-  
+public class Spinner extends SubsystemBase {
+  public CANSparkMax SpinnerJerryMotor;
   /**
-   * Creates a new Harvester.
+   * Creates a new Spinner.
    */
-  public Harvester() {
-    harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
-    harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
-    LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
+  public Spinner() {
+    SpinnerJerryMotor = new CANSparkMax (SpinnerConstants.SPINNER_MOTOR_JERRY, MotorType.kBrushless);
   }
 
   @Override

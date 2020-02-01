@@ -9,17 +9,24 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends SubsystemBase {
   CANSparkMax leftDriveMotor1;
   CANSparkMax leftDriveMotor2;
   CANSparkMax rightDriveMotor1;
   CANSparkMax rightDriveMotor2;
+
+  CANEncoder leftEncoder;
+  CANEncoder rightEncoder;
+
   DifferentialDrive driveTrain;
   
   /**
@@ -34,12 +41,17 @@ public class DriveTrain extends SubsystemBase {
     leftDriveMotor2.follow(leftDriveMotor1);
     rightDriveMotor2.follow(rightDriveMotor1);
 
+    leftEncoder = leftDriveMotor1.getAlternateEncoder();
+    rightEncoder = rightDriveMotor1.getAlternateEncoder();
+
     driveTrain = new DifferentialDrive(leftDriveMotor1,rightDriveMotor1);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left Encoder Position", leftEncoder.getPosition());
+    SmartDashboard.putNumber("Right Encoder Position", rightEncoder.getPosition());
   }
   
   public void arcadeDrive(double x, double y) {

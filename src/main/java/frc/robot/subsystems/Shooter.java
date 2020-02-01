@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import com.revrobotics.CANEncoder;
 
 public class Shooter extends SubsystemBase {
   CANSparkMax SMotorChip;
@@ -26,15 +27,18 @@ public class Shooter extends SubsystemBase {
   double iVal = 0.5; // These may be terrible default values! DRRM
   double dVal = 0.5; // These may be terrible default values! DRRM
   double pidShooterSpeed = 0.0;
+  CANEncoder ShooterEncoder;
 
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-  //SMotorChip = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_CHIP, MotorType.kBrushless);
-  //SMotorDale = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_DALE, MotorType.kBrushless);
+    SMotorChip = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_CHIP, MotorType.kBrushed);
+    SMotorDale = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_DALE, MotorType.kBrushed);
+
     shooterPID = new PIDController(pVal, iVal, dVal);
     shooterPID.setSetpoint(pidShooterSpeed);
+    ShooterEncoder = SMotorChip.getEncoder();
 
     // Prints the initial PID values to smart dashboard
     SmartDashboard.putNumber("Current pVal = ", pVal);
@@ -47,6 +51,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Shooter Encoder positions",ShooterEncoder.getPosition());
     PIDTuner(); // Comment this out once we figure out our PID values.
   }
 

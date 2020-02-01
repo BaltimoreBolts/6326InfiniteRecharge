@@ -33,7 +33,32 @@ public final class Constants {
         public static final int SHOOTER_MOTOR_CHIP = 5;
         public static final int SHOOTER_MOTOR_DALE = 6;
     }
+    public static final class HarvesterConstants {
+        public static final int HARVESTER_MOTOR_MICKEY = 7;
+        public static final int HARVESTER_MOTOR_MINNIE = 8;
+        public static final int HARVESTER_LIMIT_SWITCH = 0;
 
+     }
+    public static final class IndexerConstants {
+        public static final int INDEXER_MOTOR_DONALD = 9;
+        public static final int INDEXER_LIMIT_SWITCH1 = 1;
+        public static final int INDEXER_LIMIT_SWITCH2 = 2;
+        public static final int INDEXER_LIMIT_SWITCH3 = 3;
+        public static final int INDEXER_LIMIT_SWITCH4 = 4;
+        public static final int INDEXER_LIMIT_SWITCH5 = 5;
+    } 
+    public static final class EjectorConstants {
+        public static final int EJECTOR_MOTOR_DAISY = 10;
+    }
+    public static final class ElevatorConstants {
+        public static final int ELEVATOR_MOTOR_GOOFY = 11;
+    }
+    public static final class HangerConstants {
+        public static final int HANGER_MOTOR_PLUTO = 12;
+    }
+    public static final class SpinnerConstants {
+        public static final int SPINNER_MOTOR_JERRY = 13;
+    }
     // Add controller constant
     public static final class Controller {
         public static final class XBOX {
