@@ -9,7 +9,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ShootPowerCell;
+import frc.robot.commands.PowerCellSucker;
+import frc.robot.commands.ElevatorGoUp;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Ejector;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -20,6 +24,7 @@ import frc.robot.subsystems.GPM;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controller;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Hanger;
@@ -46,7 +51,9 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private XboxController driver = new XboxController(OIConstants.DRIVER_CONTROLLER);
 
-
+  JoystickButton rightDriverTrigger;
+  JoystickButton aDriverButton;
+  JoystickButton dUpDriverButton;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -67,7 +74,15 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    rightDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.TRIGGER.RIGHT);
+    aDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.A);
+    dUpDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.DPAD.UP);
+    
+    rightDriverTrigger.whenPressed(new ShootPowerCell(roboShoot));
+    aDriverButton.whenPressed(new PowerCellSucker(roboHarvest));
+    dUpDriverButton. whenPressed(new ElevatorGoUp(roboElevator));
   }
+
 
 
   /**

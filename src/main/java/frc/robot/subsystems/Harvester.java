@@ -32,4 +32,9 @@ public class Harvester extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public void setSpeed(double speed){
+    harvesterMickeyMotor.set(speed);
+    harvesterMinnieMotor.set(speed);
+  }
 }

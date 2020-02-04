@@ -25,6 +25,14 @@ public class Elevator extends SubsystemBase {
     ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushless);
     elevatorEncoder = ElevatorGoofyMotor.getAlternateEncoder();
   }
+  
+  public void setSpeed(double speed){
+    ElevatorGoofyMotor.set(speed);
+  }
+
+  public double getElevatorEncoder() {
+    return elevatorEncoder.getPosition();
+  }
 
   @Override
   public void periodic() {

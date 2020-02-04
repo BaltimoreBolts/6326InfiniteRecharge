@@ -46,13 +46,13 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Current dVal = ", dVal);
     SmartDashboard.putNumber("Calculated PID = ", pidShooterSpeed);
     SmartDashboard.putNumber("Shooter Motor Speed = ", shooterMotorSpeed);
-    SmartDashboard.putBoolean("PID or Value:", false); // Set to true for using "Shooter Motor Speed" to control shooter speed
+    SmartDashboard.putBoolean("PID or Value:", true); // Set to true for using "Shooter Motor Speed" to control shooter speed
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Shooter Encoder positions",ShooterEncoder.getPosition());
-    PIDTuner(); // Comment this out once we figure out our PID values.
+    //PIDTuner(); // Comment this out once we figure out our PID values.
   }
 
   public void PIDTuner() {
@@ -66,7 +66,7 @@ public class Shooter extends SubsystemBase {
     iTemp = SmartDashboard.getNumber("Current iVal = ", -1);
     dTemp = SmartDashboard.getNumber("Current dVal = ", -1);
     motorShooterSpeed = SmartDashboard.getNumber("Shooter Motor Speed = ", -1); 
-    pidOrValue = SmartDashboard.getBoolean("PID or Value:", false);
+    pidOrValue = SmartDashboard.getBoolean("PID or Value:", true);
 
     // We don't want to set our constants to a negative value so lets prevent that
     if (pTemp >= 0 ) {
