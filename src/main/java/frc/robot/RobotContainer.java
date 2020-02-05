@@ -62,10 +62,11 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Set default drive command
+    // Negative in the Y direction makes robot go forward 2/6
     roboDT.setDefaultCommand(
       new RunCommand(() -> roboDT
         .arcadeDrive(driver.getRawAxis(Controller.XBOX.STICK.LEFT.X), 
-        driver.getRawAxis(Controller.XBOX.STICK.LEFT.Y)), roboDT));
+        -driver.getRawAxis(Controller.XBOX.STICK.LEFT.Y)), roboDT));
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by

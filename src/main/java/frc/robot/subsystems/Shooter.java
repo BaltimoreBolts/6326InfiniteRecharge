@@ -7,22 +7,25 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
-import com.revrobotics.CANEncoder;
 
+/*THIS PID CONTROLLER NEEDS WORK JMK*/
 public class Shooter extends SubsystemBase {
   CANSparkMax SMotorChip;
   CANSparkMax SMotorDale;
   double shooterMotorSpeed = 0;
 
-  PIDController shooterPID;
+  private CANPIDController shooterPID;
   double pVal = 1.0; // These may be terrible default values! DRRM 
   double iVal = 0.5; // These may be terrible default values! DRRM
   double dVal = 0.5; // These may be terrible default values! DRRM
@@ -36,8 +39,11 @@ public class Shooter extends SubsystemBase {
     SMotorChip = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_CHIP, MotorType.kBrushed);
     SMotorDale = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_DALE, MotorType.kBrushed);
 
-    shooterPID = new PIDController(pVal, iVal, dVal);
-    shooterPID.setSetpoint(pidShooterSpeed);
+    //Restore factory defaults (not necessary but let's do it anyway)
+    SMotorChip.restoreFactoryDefaults();
+    SMotorDale.restoreFactoryDefaults();
+
+    shooterPID = SMotorChip.getPIDController();
     ShooterEncoder = SMotorChip.getEncoder();
 
     // Prints the initial PID values to smart dashboard
@@ -80,15 +86,20 @@ public class Shooter extends SubsystemBase {
     if (dTemp >= 0 ) {
       dVal = dTemp;
     }
-    shooterPID.setPID(pVal, iVal, dVal);
-    pidShooterSpeed = shooterPID.calculate(pidShooterSpeed);
-    SmartDashboard.putNumber("Calculated PID = ", pidShooterSpeed);
+    shooterPID.setP(pVal);
+    shooterPID.setI(iVal);
+    shooterPID.setD(dVal);
 
     if (pidOrValue) {
       SMotorChip.set(motorShooterSpeed);
       SMotorDale.set(-motorShooterSpeed);
     } else {
       // Use PID value
+      double setPoint = 0;
+      shooterPID.setReference(setPoint, ControlType.kVelocity);
+    
+      SmartDashboard.putNumber("SetPoint", setPoint);
+      SmartDashboard.putNumber("ProcessVariable", ShooterEncoder.getVelocity());
     }
   }
 
