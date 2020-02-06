@@ -77,11 +77,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     rightDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.TRIGGER.RIGHT);
     aDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.A);
-    dUpDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.DPAD.UP);
+    //dUpDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.DPAD.UP);
     
     rightDriverTrigger.whenPressed(new ShootPowerCell(roboShoot));
     aDriverButton.whenPressed(new PowerCellSucker(roboHarvest));
-    dUpDriverButton. whenPressed(new ElevatorGoUp(roboElevator));
+    //dUpDriverButton. whenPressed(new ElevatorGoUp(roboElevator));
   }
 
 
