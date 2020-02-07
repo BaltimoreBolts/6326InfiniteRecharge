@@ -58,6 +58,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Shooter Encoder positions",ShooterEncoder.getPosition());
+    SmartDashboard.putNumber("Shooter Encoder velocity",ShooterEncoder.getVelocity());
     PIDTuner(); // Comment this out once we figure out our PID values.
   }
 
@@ -93,10 +94,10 @@ public class Shooter extends SubsystemBase {
     shooterPID.setI(iVal);
     shooterPID.setD(dVal);*/
 
-    if (motor1ShooterSpeed >= 0.8) {
-      motor1ShooterSpeed = 0.8;
-    } else if (motor1ShooterSpeed <= -0.8) {
-      motor1ShooterSpeed = -0.8;
+    if (motor1ShooterSpeed >= 1.0) {
+      motor1ShooterSpeed = 1.0;
+    } else if (motor1ShooterSpeed <= -1.0) {
+      motor1ShooterSpeed = -1.0;
     }
 
     if (motor2ShooterSpeed >= 0.8) {
