@@ -39,10 +39,10 @@ public class Shooter extends SubsystemBase {
     SMotorDale = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_DALE, MotorType.kBrushed);
 
     //Restore factory defaults (not necessary but let's do it anyway)
-    SMotorChip.restoreFactoryDefaults();
-    SMotorDale.restoreFactoryDefaults();
+    //SMotorChip.restoreFactoryDefaults();
+    //SMotorDale.restoreFactoryDefaults();
 
-    shooterPID = SMotorChip.getPIDController();
+    //shooterPID = SMotorChip.getPIDController();
     ShooterEncoder = SMotorChip.getEncoder();
 
     // Prints the initial PID values to smart dashboard
@@ -89,9 +89,9 @@ public class Shooter extends SubsystemBase {
     if (dTemp >= 0 ) {
       dVal = dTemp;
     }
-    shooterPID.setP(pVal);
+    /*shooterPID.setP(pVal);
     shooterPID.setI(iVal);
-    shooterPID.setD(dVal);
+    shooterPID.setD(dVal);*/
 
     if (motor1ShooterSpeed >= 0.8) {
       motor1ShooterSpeed = 0.8;
@@ -107,7 +107,7 @@ public class Shooter extends SubsystemBase {
 
     if (true) {
       SMotorChip.set(motor1ShooterSpeed);
-      SMotorDale.set(-motor2ShooterSpeed);
+      SMotorDale.set(-motor1ShooterSpeed);
     } else {
       // Use PID value
       // This currently only sets value for one motor!! JMK
