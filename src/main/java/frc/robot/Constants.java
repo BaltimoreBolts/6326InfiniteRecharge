@@ -16,6 +16,11 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    //General constants
+    public static final class GenConstants {
+        public static final int REV_ENCODER_CPR = 8192;
+    }
+
      // To import this elsewhere use import import frc.robot.Constants.OIConstants;
      public static final class OIConstants {
         //These need to be public within the class so they are accessible

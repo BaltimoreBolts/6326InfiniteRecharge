@@ -30,6 +30,6 @@ CANEncoder hangerEncoder;
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Hanger Encoder positions",hangerEncoder.getPosition());
+    SmartDashboard.putNumber("Hanger Pos",hangerEncoder.getPosition());
   }
 }
