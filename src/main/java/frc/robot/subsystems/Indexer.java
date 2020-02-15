@@ -14,11 +14,15 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
+import com.revrobotics.AlternateEncoderType;
 
 public class Indexer extends SubsystemBase {
   public CANSparkMax IndexerDonaldMotor;
   DigitalInput limitSwitch1;
   CANEncoder indexencoder;
+  private CANEncoder m_alternateEncoder;
+  private static final int kCPR = 8192;
+  private static final AlternateEncoderType kAltEncType = AlternateEncoderType.kQuadrature;
  
 
   /**
@@ -28,6 +32,7 @@ public class Indexer extends SubsystemBase {
     IndexerDonaldMotor = new CANSparkMax (IndexerConstants.INDEXER_MOTOR_DONALD, MotorType.kBrushless); 
     limitSwitch1 = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
     indexencoder = IndexerDonaldMotor.getAlternateEncoder();
+    m_alternateEncoder = IndexerDonaldMotor.getAlternateEncoder(kAltEncType, kCPR);
   }
 
   @Override
