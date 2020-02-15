@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GenConstants;
 import frc.robot.Constants.ShooterConstants;
 
-/*import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;*/
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 /*THIS PID CONTROLLER NEEDS WORK JMK*/
 public class Shooter extends SubsystemBase {
@@ -32,17 +32,17 @@ public class Shooter extends SubsystemBase {
   double motor1ShooterSpeed = 0;
 
   private CANPIDController shooterPID;
-  double kP = 6e-5; // Updated to reflect REV default JMK
-  double kI = 0; // Updated to reflect REV default JMK
-  double kD = 0; // Updated to reflect REV default JMK
-  double kFF = 0;//0.000015;
+  double kP = 2e-5; 
+  double kI = 0; 
+  double kD = 0; 
+  double kFF = 0.000165;//0.000015;
   CANEncoder ShooterEncoder;
 
   // Network table for chameleon vision
-  /*NetworkTableInstance table = NetworkTableInstance.getDefault();
+  NetworkTableInstance table = NetworkTableInstance.getDefault();
   NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("PsThreeCam");
   public NetworkTableEntry targetPose;
-  double targetArr[] = new double[]{0,0,0};*/
+  double targetArr[] = new double[]{0,0,0};
   double x,y,angle = 0;
 
 
@@ -85,11 +85,14 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Shooter Encoder",ShooterEncoder.getPosition());
     SmartDashboard.putNumber("Shooter Vel",ShooterEncoder.getVelocity());
-    /*targetPose = cameraTable.getEntry("targetPose");
+    targetPose = cameraTable.getEntry("targetPose");
     targetArr = targetPose.getDoubleArray(targetArr);
     x = targetArr[0];
     y = targetArr[1];
-    angle = targetArr[2];*/
+    angle = targetArr[2];
+    SmartDashboard.putNumber("XDist", x);
+    SmartDashboard.putNumber("yDist", y);
+    SmartDashboard.putNumber("angleDist", angle);
     
     PIDTuner(); // Comment this out once we figure out our PID values.
   }
