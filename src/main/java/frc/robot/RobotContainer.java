@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controller;
 import frc.robot.subsystems.Elevator;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.cscore.UsbCamera;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -42,6 +44,9 @@ public class RobotContainer {
   private final Shooter roboShoot = new Shooter();
   private final GPM roboGPM = new GPM();
   private final Elevator roboElevator = new Elevator();
+   // Define CameraServer
+   public CameraServer RobotCamera;
+   public UsbCamera frontRobotCamera;
  
   
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -63,6 +68,9 @@ public class RobotContainer {
       new RunCommand(() -> roboDT
         .arcadeDrive(driver.getRawAxis(Controller.XBOX.STICK.LEFT.X), 
         -driver.getRawAxis(Controller.XBOX.STICK.LEFT.Y)), roboDT));
+        RobotCamera = CameraServer.getInstance();
+    frontRobotCamera = RobotCamera.startAutomaticCapture(0);
+
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
