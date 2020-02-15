@@ -17,12 +17,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends SubsystemBase {
   public CANSparkMax ElevatorGoofyMotor;
+  public CANSparkMax ElevatorPlutoMotor;
+
   CANEncoder elevatorEncoder;
   /**
    * Creates a new Elevator.
    */
   public Elevator() {
-    ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushless);
+    ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushed);
+    ElevatorPlutoMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_PLUTO,MotorType.kBrushed);
     elevatorEncoder = ElevatorGoofyMotor.getAlternateEncoder();
   }
   

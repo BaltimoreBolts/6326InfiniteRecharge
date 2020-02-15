@@ -15,7 +15,6 @@ import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.PowerCellSucker;
 import frc.robot.commands.ElevatorGoUp;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Ejector;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Harvester;
 import frc.robot.subsystems.Shooter;
@@ -27,8 +26,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controller;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Hanger;
-import frc.robot.subsystems.Spinner;
+
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -43,10 +41,8 @@ public class RobotContainer {
   private final Indexer roboIndex = new Indexer();
   private final Shooter roboShoot = new Shooter();
   private final GPM roboGPM = new GPM();
-  private final Ejector roboEjector = new Ejector();
   private final Elevator roboElevator = new Elevator();
-  private final Hanger roboHanger = new Hanger();
-  private final Spinner roboSpinner = new Spinner();
+ 
   
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private XboxController driver = new XboxController(OIConstants.DRIVER_CONTROLLER);

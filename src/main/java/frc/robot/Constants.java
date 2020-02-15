@@ -57,9 +57,7 @@ public final class Constants {
     }
     public static final class ElevatorConstants {
         public static final int ELEVATOR_MOTOR_GOOFY = 11;
-    }
-    public static final class HangerConstants {
-        public static final int HANGER_MOTOR_PLUTO = 12;
+        public static final int ELEVATOR_MOTOR_PLUTO = 12;
     }
     public static final class SpinnerConstants {
         public static final int SPINNER_MOTOR_JERRY = 13;
