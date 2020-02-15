@@ -20,12 +20,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GenConstants;
 import frc.robot.Constants.ShooterConstants;
 
+/*import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;*/
+
 /*THIS PID CONTROLLER NEEDS WORK JMK*/
 public class Shooter extends SubsystemBase {
   CANSparkMax SMotorChip;
   CANSparkMax SMotorDale;
-  double shooterMotor1Speed = 0;
   double desiredRPM = 0;
+  double motor1ShooterSpeed = 0;
 
   private CANPIDController shooterPID;
   double kP = 6e-5; // Updated to reflect REV default JMK
@@ -33,6 +37,14 @@ public class Shooter extends SubsystemBase {
   double kD = 0; // Updated to reflect REV default JMK
   double kFF = 0;//0.000015;
   CANEncoder ShooterEncoder;
+
+  // Network table for chameleon vision
+  /*NetworkTableInstance table = NetworkTableInstance.getDefault();
+  NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("PsThreeCam");
+  public NetworkTableEntry targetPose;
+  double targetArr[] = new double[]{0,0,0};*/
+  double x,y,angle = 0;
+
 
   /**
    * Creates a new Shooter.
@@ -60,16 +72,25 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Current iVal = ", kI);
     SmartDashboard.putNumber("Current dVal = ", kD);
     SmartDashboard.putNumber("Current ffVal = ", kFF);
-    SmartDashboard.putNumber("Shooter Motor1 Speed = ", shooterMotor1Speed);
+    SmartDashboard.putNumber("Shooter Speed = ", motor1ShooterSpeed);
     SmartDashboard.putNumber("Desired RPM = ",desiredRPM);
-    SmartDashboard.putBoolean("PID or Value:", true); // Set to true for using "Shooter Motor Speed" to control shooter speed
-  
+    SmartDashboard.putBoolean("Value or SetPID:", true); // Set to true for using "Shooter Motor Speed" to control shooter speed
+    SmartDashboard.putNumber("XDist", x);
+    SmartDashboard.putNumber("yDist", y);
+    SmartDashboard.putNumber("angleDist", angle);
+    
 }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Shooter Encoder",ShooterEncoder.getPosition());
     SmartDashboard.putNumber("Shooter Vel",ShooterEncoder.getVelocity());
+    /*targetPose = cameraTable.getEntry("targetPose");
+    targetArr = targetPose.getDoubleArray(targetArr);
+    x = targetArr[0];
+    y = targetArr[1];
+    angle = targetArr[2];*/
+    
     PIDTuner(); // Comment this out once we figure out our PID values.
   }
 
@@ -78,7 +99,6 @@ public class Shooter extends SubsystemBase {
     double iTemp = 0;
     double dTemp = 0;
     double ffTemp = 0;
-    double motor1ShooterSpeed = 0;
     boolean valueOrPID;
 
     pTemp = SmartDashboard.getNumber("Current pVal = ", 0);
