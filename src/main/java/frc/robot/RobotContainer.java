@@ -70,16 +70,15 @@ public class RobotContainer {
         -driver.getRawAxis(Controller.XBOX.STICK.LEFT.Y)), roboDT));
         RobotCamera = CameraServer.getInstance();
     frontRobotCamera = RobotCamera.startAutomaticCapture(0);
-    /**public void cameraInit(){
-      serverOne = CameraServer.getInstance();
+    /** serverOne = CameraServer.getInstance();
 	    //serverOne.startAutomaticCapture();
 	    //serverOne.startAutomaticCapture(0);
 	    camera = serverOne.startAutomaticCapture(0);
 	    camera.setResolution(RobotMap.IMG_WIDTH, RobotMap.IMG_HEIGHT);
 	    camera.setBrightness(50);
-	    camera.setExposureManual(50); 
+	    camera.setExposureManual(50); **/
 
-    }
+  
 
   }
   /**
