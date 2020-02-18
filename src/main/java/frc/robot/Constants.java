@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import java.lang.Math;
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -15,10 +16,18 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
+
 public final class Constants {
     //General constants
     public static final class GenConstants {
         public static final int REV_ENCODER_CPR = 8192;
+
+       public static final double g = 32.2; //ft per second squared
+       public static final double h = 8.17;
+       public static final double y0 = 1;
+       public static final double theta = 0;
+       public static final double cosTheta = Math.cos(theta);
+       public static final double tanTheta = Math.tan(theta);
     }
 
      // To import this elsewhere use import import frc.robot.Constants.OIConstants;
@@ -106,6 +115,7 @@ public final class Constants {
                     public static final int Y = 5;
                 }
             }
+
         }
     }
 }

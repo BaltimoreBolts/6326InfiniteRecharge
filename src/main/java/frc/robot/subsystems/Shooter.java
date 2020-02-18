@@ -7,16 +7,20 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleUnaryOperator;
+
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 import com.revrobotics.EncoderType;
+import java.lang.Math;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.GenConstants;
 import frc.robot.Constants.ShooterConstants;
 
@@ -156,8 +160,15 @@ public class Shooter extends SubsystemBase {
       SmartDashboard.putNumber("Output Dale",SMotorDale.getAppliedOutput());
     }
   }
-  public double getNeededVal(double x){
-    v = x/1(g/8.17*1*x-1);
+  public double getNeededVal(double x) {
+    double v;
+   
+
+    v = (x/Constants.GenConstants.cosTheta)
+    *Math.pow(Constants.GenConstants.g/
+    (Constants.GenConstants.h*Constants.GenConstants.tanTheta*x-Constants.GenConstants.y0),0.5);
+
+    return v;
 
   }
 

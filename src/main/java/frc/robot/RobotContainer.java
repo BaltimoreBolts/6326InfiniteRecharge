@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ShootPowerCell;
+import frc.robot.commands.moveIndexer;
 import frc.robot.commands.PowerCellSucker;
 import frc.robot.commands.ElevatorGoUp;
 import frc.robot.subsystems.DriveTrain;
@@ -19,7 +20,6 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Harvester;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.GPM;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -40,9 +40,8 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain roboDT = new DriveTrain();
   private final Harvester roboHarvest = new Harvester();
-  private final Indexer roboIndex = new Indexer();
+  private final Indexer roboIndexer = new Indexer();
   private final Shooter roboShoot = new Shooter();
-  private final GPM roboGPM = new GPM();
   private final Elevator roboElevator = new Elevator();
    // Define CameraServer
    public CameraServer RobotCamera;
@@ -55,6 +54,7 @@ public class RobotContainer {
   JoystickButton rightDriverTrigger;
   JoystickButton aDriverButton;
   JoystickButton dUpDriverButton;
+  JoystickButton yDriverButton;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -91,10 +91,11 @@ public class RobotContainer {
     rightDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.TRIGGER.RIGHT);
     aDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.A);
     //dUpDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.DPAD.UP);
-    
+    yDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.Y);
     rightDriverTrigger.whenPressed(new ShootPowerCell(roboShoot));
     aDriverButton.whenPressed(new PowerCellSucker(roboHarvest));
     //dUpDriverButton. whenPressed(new ElevatorGoUp(roboElevator));
+    yDriverButton.whenPressed(new moveIndexer(roboIndexer));
   }
 
 
