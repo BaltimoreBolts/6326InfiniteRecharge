@@ -156,6 +156,10 @@ public class Shooter extends SubsystemBase {
       SmartDashboard.putNumber("Output Dale",SMotorDale.getAppliedOutput());
     }
   }
+  public double getNeededVal(double x){
+    v = x/1(g/8.17*1*x-1);
+
+  }
 
 
 }
