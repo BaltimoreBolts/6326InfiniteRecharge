@@ -24,7 +24,7 @@ import java.lang.Math;
 
 public class Indexer extends SubsystemBase {
   public CANSparkMax IndexerDonaldMotor;
-  DigitalInput limitSwitch1;
+  DigitalInput OpticalSensor;
   CANEncoder indexencoder;
   private CANEncoder alternateEncoder;
   private static final int kCPR = 8192;
@@ -35,12 +35,9 @@ public class Indexer extends SubsystemBase {
   double kD = 0; 
   double kFF = 0.000165;//0.000015;
   ShuffleboardTab indexerTab = Shuffleboard.getTab("Indexer");
-  NetworkTableEntry pTemp = indexerTab.add("Current pVal = ", 0).getEntry();
-  NetworkTableEntry iTemp = indexerTab.add("Current iVal = ", 0).getEntry();
-  NetworkTableEntry dTemp = indexerTab.add("Current dVal = ", 0).getEntry();
-  NetworkTableEntry ffTemp = indexerTab.add("Current ffVal = ", 0).getEntry();
   NetworkTableEntry desiredRotationNT = indexerTab.add("Desired Rotation = ", 0).getEntry();
   NetworkTableEntry currentRotationNT = indexerTab.add("Current Rotation = ", 0).getEntry();
+  NetworkTableEntry desiredSpeed = indexerTab.add("Desired Speed = ", 0).getEntry();
 
 
   /**
@@ -48,7 +45,7 @@ public class Indexer extends SubsystemBase {
    */
   public Indexer() {
     IndexerDonaldMotor = new CANSparkMax (IndexerConstants.INDEXER_MOTOR_DONALD, MotorType.kBrushless); 
-    limitSwitch1 = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
+    OpticalSensor = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
     indexencoder = IndexerDonaldMotor.getAlternateEncoder();
     alternateEncoder = IndexerDonaldMotor.getAlternateEncoder(kAltEncType, kCPR);
   }
@@ -64,26 +61,23 @@ public class Indexer extends SubsystemBase {
     return Counts;
 
   }
-  public void PIDTuner() {
-    double p = 0;
-    double i = 0;
-    double d = 0;
-    double ff = 0;
-    double desiredRotation = 0;
-
-    p = pTemp.getDouble(0);
-    i = iTemp.getDouble(0);
-    d = dTemp.getDouble(0);
-    ff = ffTemp.getDouble(0);
-    desiredRotation = desiredRotationNT.getDouble(0);   
-    
-    if((p != kP)) { indexerPID.setP(p); kP = p; }
-    if((kI != i)) { indexerPID.setI(i); kI = i; }
-    if((d != kD)) { indexerPID.setD(d); kD = d; }
-    if((ff != kFF)) { indexerPID.setFF(ff); kFF = ff; }
-    int desiredCounts = degreeToCounts(desiredRotation, kCPR);
+  public void UpdateDashboard() {
+    //int desiredCounts = degreeToCounts(desiredRotation, kCPR);
     int currentCounts = (int)alternateEncoder.getPosition();
-    indexerPID.setReference(desiredCounts + currentCounts, ControlType.kPosition);
     currentRotationNT.setDouble(alternateEncoder.getPosition());
-  }  
+  } 
+  public void Movement (double speed){
+    IndexerDonaldMotor.set(speed);
+  } 
+  public int getEncoderValue(){
+    return (int)alternateEncoder.getPosition();
+
+  }
+  public boolean getP0(){
+    return OpticalSensor.get();
+  }
+  public double getdesiredSpeed(){
+    return desiredSpeed.getDouble(0);
+   
+  }
 }
