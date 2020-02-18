@@ -18,7 +18,7 @@ public class PowerCellSucker extends CommandBase {
   public PowerCellSucker(Harvester roboHarvest) {
     roboKirby = roboHarvest;
     // Use addRequirements() here to declare subsystem dependencies.
-  addRequirements(roboHarvest);
+    addRequirements(roboHarvest);
   }
 
   // Called when the command is initially scheduled.

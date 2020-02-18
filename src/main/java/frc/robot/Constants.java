@@ -21,13 +21,13 @@ public final class Constants {
     //General constants
     public static final class GenConstants {
         public static final int REV_ENCODER_CPR = 8192;
-
-       public static final double g = 32.2; //ft per second squared
-       public static final double h = 8.17;
-       public static final double y0 = 1;
-       public static final double theta = 0;
-       public static final double cosTheta = Math.cos(theta);
-       public static final double tanTheta = Math.tan(theta);
+        public static final double DEG2RAD = Math.PI/180.0;
+        public static final double G_FT_PER_SEC2 = 32.2; //ft per second squared
+        public static final double INNER_PORT_HEIGHT_FT = 8.17;
+        public static final double SHOOTER_HEIGHT_FT = 1;
+        public static final double SHOOTER_ANGLE_DEG = 0;
+        public static final double COS_ANGLE = Math.cos(SHOOTER_ANGLE_DEG*DEG2RAD);
+        public static final double TAN_ANGLE = Math.tan(SHOOTER_ANGLE_DEG*DEG2RAD);
     }
 
      // To import this elsewhere use import import frc.robot.Constants.OIConstants;

@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.HarvesterConstants;
 
 public class Harvester extends SubsystemBase {
-  CANSparkMax harvesterMickeyMotor;
-  CANSparkMax harvesterMinnieMotor;
-  DigitalInput LimitSwitch0;
+  private CANSparkMax harvesterMickeyMotor;
+  private CANSparkMax harvesterMinnieMotor;
+  private DigitalInput LimitSwitch0;
   
   /**
    * Creates a new Harvester.

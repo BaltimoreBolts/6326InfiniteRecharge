@@ -30,22 +30,22 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 /*THIS PID CONTROLLER NEEDS WORK JMK*/
 public class Shooter extends SubsystemBase {
-  CANSparkMax SMotorChip;
-  CANSparkMax SMotorDale;
-  double desiredRPM = 0;
-  double motor1ShooterSpeed = 0;
+  private CANSparkMax SMotorChip;
+  private CANSparkMax SMotorDale;
+  private double desiredRPM = 0;
+  private double motor1ShooterSpeed = 0;
 
   private CANPIDController shooterPID;
-  double kP = 2e-5; 
-  double kI = 0; 
-  double kD = 0; 
-  double kFF = 0.000165;//0.000015;
-  CANEncoder ShooterEncoder;
+  private double kP = 2e-5; 
+  private double kI = 0; 
+  private double kD = 0; 
+  private double kFF = 0.000165;//0.000015;
+  private CANEncoder ShooterEncoder;
 
   // Network table for chameleon vision
   NetworkTableInstance table = NetworkTableInstance.getDefault();
   NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("PsThreeCam");
-  public NetworkTableEntry targetPose;
+  private NetworkTableEntry targetPose;
   double targetArr[] = new double[]{0,0,0};
   double x,y,angle = 0;
 
@@ -115,24 +115,6 @@ public class Shooter extends SubsystemBase {
     motor1ShooterSpeed = SmartDashboard.getNumber("Shooter Speed = ", 0); 
     desiredRPM = SmartDashboard.getNumber("Desired RPM = ", 0);
     valueOrPID = SmartDashboard.getBoolean("Value or SetPID:", true);
-  
-
-    // We don't want to set our constants to a negative value so lets prevent that
-    /*if (pTemp >= 0 ) {
-      kP = pTemp;
-    }
-
-    if (iTemp >= 0 ) {
-      kI = iTemp;
-    }
-
-    if (dTemp >= 0 ) {
-      kD = dTemp;
-    }
-
-    if (ffTemp >= 0 ) {
-      kFF = ffTemp;
-    }*/
 
     // if PID coefficients on SmartDashboard have changed, write new values to controller
     if((pTemp != kP)) { shooterPID.setP(pTemp); kP = pTemp; }
@@ -160,15 +142,19 @@ public class Shooter extends SubsystemBase {
       SmartDashboard.putNumber("Output Dale",SMotorDale.getAppliedOutput());
     }
   }
-  public double getNeededVal(double x) {
-    double v;
+  /*Determine RPM of shooter needed to score power cells in power port 
+  ** xdist - distance from power port in ft from vision processing
+  ** fudgeFactor - multiplication needed to turn velocity into RPM
+  */
+  public double getNeededRPM(double xDist, double fudgeFactor) {
+    double vel;
    
+    vel = (xDist/Constants.GenConstants.COS_ANGLE)
+      *Math.pow(Constants.GenConstants.G_FT_PER_SEC2/
+      (Constants.GenConstants.INNER_PORT_HEIGHT_FT*Constants.GenConstants.TAN_ANGLE*xDist
+      -Constants.GenConstants.SHOOTER_HEIGHT_FT),0.5);
 
-    v = (x/Constants.GenConstants.cosTheta)
-    *Math.pow(Constants.GenConstants.g/
-    (Constants.GenConstants.h*Constants.GenConstants.tanTheta*x-Constants.GenConstants.y0),0.5);
-
-    return v;
+    return fudgeFactor*vel;
 
   }
 

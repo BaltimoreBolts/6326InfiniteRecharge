@@ -16,8 +16,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends SubsystemBase {
-  public CANSparkMax ElevatorGoofyMotor;
-  public CANSparkMax ElevatorPlutoMotor;
+  private CANSparkMax ElevatorGoofyMotor;
+  private CANSparkMax ElevatorPlutoMotor;
 
   CANEncoder elevatorEncoder;
   /**
