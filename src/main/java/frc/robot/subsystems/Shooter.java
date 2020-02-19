@@ -46,8 +46,9 @@ public class Shooter extends SubsystemBase {
   NetworkTableInstance table = NetworkTableInstance.getDefault();
   NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("PsThreeCam");
   private NetworkTableEntry targetPose;
-  double targetArr[] = new double[]{0,0,0};
-  double x,y,angle = 0;
+  private double targetArr[] = new double[]{0,0,0};
+  private double x,y,angle = 0;
+  private double fudgeFactor = 0;
 
 
   /**
@@ -59,9 +60,7 @@ public class Shooter extends SubsystemBase {
     // Set Dale to follow Chip, but inverted
     SMotorDale.restoreFactoryDefaults();
     SMotorDale.follow(SMotorChip,true);
-    //SMotorChip.restoreFactoryDefaults();
     
-
     ShooterEncoder = SMotorChip.getEncoder(EncoderType.kQuadrature,GenConstants.REV_ENCODER_CPR);
     //Start PID
     shooterPID = SMotorChip.getPIDController();
@@ -82,6 +81,9 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("XDist", x);
     SmartDashboard.putNumber("yDist", y);
     SmartDashboard.putNumber("angleDist", angle);
+    SmartDashboard.putNumber("Calculated velocity", 0);
+    SmartDashboard.putNumber("Calculated RPM", 0);
+    SmartDashboard.putNumber("fudge Factor", fudgeFactor);
     
 }
 
@@ -97,8 +99,10 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("XDist", x);
     SmartDashboard.putNumber("yDist", y);
     SmartDashboard.putNumber("angleDist", angle);
+    SmartDashboard.getNumber("fudge Factor", fudgeFactor);
     
     PIDTuner(); // Comment this out once we figure out our PID values.
+    getNeededRPM(x, fudgeFactor);
   }
 
   public void PIDTuner() {
@@ -147,14 +151,20 @@ public class Shooter extends SubsystemBase {
   ** fudgeFactor - multiplication needed to turn velocity into RPM
   */
   public double getNeededRPM(double xDist, double fudgeFactor) {
-    double vel;
+
+    double vel, RPM;
    
     vel = (xDist/Constants.GenConstants.COS_ANGLE)
-      *Math.pow(Constants.GenConstants.G_FT_PER_SEC2/
-      (Constants.GenConstants.INNER_PORT_HEIGHT_FT*Constants.GenConstants.TAN_ANGLE*xDist
+      *Math.pow(-Constants.GenConstants.G_FT_PER_SEC2/
+      (Constants.GenConstants.INNER_PORT_HEIGHT_FT-Constants.GenConstants.TAN_ANGLE*xDist
       -Constants.GenConstants.SHOOTER_HEIGHT_FT),0.5);
 
-    return fudgeFactor*vel;
+    RPM = fudgeFactor*vel;
+
+    SmartDashboard.putNumber("Calculated velocity", vel);
+    SmartDashboard.putNumber("Calculated RPM", RPM);
+
+    return RPM;
 
   }
 
