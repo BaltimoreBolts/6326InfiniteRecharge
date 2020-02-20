@@ -29,11 +29,11 @@ public class Indexer extends SubsystemBase {
   private DigitalInput OpticalSensor;
   private CANEncoder alternateEncoder;
   private static final AlternateEncoderType kAltEncType = AlternateEncoderType.kQuadrature;
+  private boolean []PCArray;
 
-  ShuffleboardTab indexerTab = Shuffleboard.getTab("Indexer");
-  NetworkTableEntry desiredRotationNT = indexerTab.add("Desired Rotation = ", 0).getEntry();
-  NetworkTableEntry currentRotationNT = indexerTab.add("Current Rotation = ", 0).getEntry();
-  NetworkTableEntry desiredSpeedNT = indexerTab.add("Desired Speed = ", 0).getEntry();
+  ShuffleboardTab indexerTab;
+  NetworkTableEntry desiredRotationNT, currentRotationNT, desiredSpeedNT;
+  NetworkTableEntry PCDash0, PCDash1, PCDash2, PCDash3;
 
 
   /**
@@ -44,6 +44,23 @@ public class Indexer extends SubsystemBase {
     OpticalSensor = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
     alternateEncoder = IndexerDonaldMotor.getAlternateEncoder(kAltEncType, 
                         Constants.GenConstants.REV_ENCODER_CPR);
+    //PCArray= {false,false,false,false};
+    PCArray[0] = false;
+    PCArray[1] = false;
+    PCArray[2] = false;
+    PCArray[3] = false;
+
+    ShuffleboardTab indexerTab = Shuffleboard.getTab("Indexer");
+    desiredRotationNT = indexerTab.add("Desired Rotation = ", 0).getEntry();
+    currentRotationNT = indexerTab.add("Current Rotation = ", 0).getEntry();
+    desiredSpeedNT = indexerTab.add("Desired Speed = ", 0).getEntry();
+    //PCIndicator = indexerTab.add("Power Cell Array",0).getEntry();
+    PCDash0 = indexerTab.add("PC0",PCArray[0]).getEntry();
+    PCDash1 = indexerTab.add("PC1",PCArray[1]).getEntry();
+    PCDash2 = indexerTab.add("PC2",PCArray[2]).getEntry();
+    PCDash3 = indexerTab.add("PC3",PCArray[3]).getEntry();
+
+  
   }
 
   @Override
@@ -63,6 +80,19 @@ public class Indexer extends SubsystemBase {
     desiredSpeedNT.getDouble(0);
     desiredRotationNT.getDouble(0);
   } 
+  public void ShiftPCArray(boolean PC0) {
+    PCArray[3] =PCArray[2];
+    PCArray[2] = PCArray[1];
+    PCArray[1] = PCArray[0];
+    PCArray[0] = PC0;
+  }
+  public void SetPCArray(boolean[] inputArray){
+    PCArray[0] = inputArray[0];
+    PCArray[1] = inputArray[1];
+    PCArray[2] = inputArray[2];
+    PCArray[3] = inputArray[3];
+    PCArray[0] = OpticalSensor.get();
+  }
   //Move the indexer motor at a certain speed
   public void Movement (double speed){
     IndexerDonaldMotor.set(speed);
