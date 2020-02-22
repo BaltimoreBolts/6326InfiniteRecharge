@@ -147,16 +147,19 @@ public class Shooter extends SubsystemBase {
     }
   }
   /*Determine RPM of shooter needed to score power cells in power port 
-  ** xdist - distance from power port in ft from vision processing
+  ** xdist - distance from power port in m from vision processing
   ** fudgeFactor - multiplication needed to turn velocity into RPM
   */
-  public double getNeededRPM(double xDist, double fudgeFactor) {
+  public double getNeededRPM(double xDist_m, double fudgeFactor) {
 
     double vel, RPM;
+
+    // Convert xdist to feet
+    double xDist_ft = xDist_m*GenConstants.M_TO_FEET;
    
-    vel = (xDist/Constants.GenConstants.COS_ANGLE)
+    vel = (xDist_ft/Constants.GenConstants.COS_ANGLE)
       *Math.pow(-Constants.GenConstants.G_FT_PER_SEC2/
-      (Constants.GenConstants.INNER_PORT_HEIGHT_FT-Constants.GenConstants.TAN_ANGLE*xDist
+      (Constants.GenConstants.INNER_PORT_HEIGHT_FT-Constants.GenConstants.TAN_ANGLE*xDist_ft
       -Constants.GenConstants.SHOOTER_HEIGHT_FT),0.5);
 
     RPM = fudgeFactor*vel;

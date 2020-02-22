@@ -42,8 +42,8 @@ public class DriveTrain extends SubsystemBase {
     leftDriveMotor2.follow(leftDriveMotor1);
     rightDriveMotor2.follow(rightDriveMotor1);
 
-    leftEncoder = leftDriveMotor1.getAlternateEncoder(kAltEncType,GenConstants.REV_ENCODER_CPR);
-    rightEncoder = rightDriveMotor1.getAlternateEncoder(kAltEncType,GenConstants.REV_ENCODER_CPR);
+    leftEncoder = leftDriveMotor2.getAlternateEncoder(kAltEncType,GenConstants.REV_ENCODER_CPR);
+    rightEncoder = rightDriveMotor2.getAlternateEncoder(kAltEncType,GenConstants.REV_ENCODER_CPR);
 
     driveTrain = new DifferentialDrive(leftDriveMotor1,rightDriveMotor1);
   }
