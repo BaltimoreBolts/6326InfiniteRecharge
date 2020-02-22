@@ -23,6 +23,7 @@ public final class Constants {
         public static final int REV_ENCODER_CPR = 8192;
         public static final double DEG2RAD = Math.PI/180.0;
         public static final double G_FT_PER_SEC2 = 32.2; //ft per second squared
+        public static final double M_TO_FEET = 3.28084; 
         public static final double INNER_PORT_HEIGHT_FT = 8.17;
         public static final double SHOOTER_HEIGHT_FT = 1;
         public static final double SHOOTER_ANGLE_DEG = 0;
