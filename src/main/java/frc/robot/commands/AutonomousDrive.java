@@ -60,13 +60,15 @@ public class AutonomousDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    desiredLeftPosition = roboDT.inchesToCounts(distToTravel_in, 
-    Constants.GenConstants.REV_ENCODER_CPR)+initialLeftPosition;
+    desiredLeftPosition = initialLeftPosition - roboDT.inchesToCounts(distToTravel_in, 
+    Constants.GenConstants.REV_ENCODER_CPR);
     currentLeftPosition = (int)roboDT.getLeftPosition();
+   
     desiredRightPosition = roboDT.inchesToCounts(distToTravel_in, 
     Constants.GenConstants.REV_ENCODER_CPR)+initialRightPosition;
     currentRightPosition = (int)roboDT.getRightPosition();
-    if ((currentRightPosition >= desiredRightPosition) && (currentLeftPosition>=desiredLeftPosition)){
+    
+    if ((currentRightPosition >= desiredRightPosition) && (currentLeftPosition<=desiredLeftPosition)){
       return true;
   } else {
     return false;

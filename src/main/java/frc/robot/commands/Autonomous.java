@@ -24,6 +24,8 @@ public class Autonomous extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     double inchesToTravel =18;
     new AutonomousDrive(drive,inchesToTravel);
-    new ShootPowerCell(shoot);
+   for (int i = 0; i <3; i ++){
+     new ShootPowerCell(shoot);
+   } 
   }
 }
