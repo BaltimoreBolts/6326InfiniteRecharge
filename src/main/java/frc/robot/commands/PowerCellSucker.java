@@ -24,7 +24,7 @@ public class PowerCellSucker extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    roboKirby.setSpeed(0.25);
+    roboKirby.setMickeySpeed(0.25);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

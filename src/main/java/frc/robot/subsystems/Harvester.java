@@ -7,10 +7,13 @@
 
 package frc.robot.subsystems;
 
+import javax.lang.model.util.ElementScanner6;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.HarvesterConstants;
 
@@ -30,11 +33,13 @@ public class Harvester extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (LimitSwitch0.get()){
+      harvesterMinnieMotor.set(0.5);
+  } else {
+    harvesterMinnieMotor.set(0);}
+}   
     // This method will be called once per scheduler run
-  }
-
-  public void setSpeed(double speed){
+  public void setMickeySpeed(double speed){
     harvesterMickeyMotor.set(speed);
-    harvesterMinnieMotor.set(speed);
   }
 }
