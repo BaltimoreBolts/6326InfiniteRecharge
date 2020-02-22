@@ -14,7 +14,7 @@ import frc.robot.subsystems.DriveTrain;
 
 
 
-public class Autonomous extends CommandBase {
+public class AutonomousDrive extends CommandBase {
   /**
    * Creates a new Autonomous.
    */
@@ -29,7 +29,7 @@ public class Autonomous extends CommandBase {
  
    
   DriveTrain roboDT;
-  public Autonomous(DriveTrain robotDT, double inchesToTravel) {
+  public AutonomousDrive(DriveTrain robotDT, double inchesToTravel) {
     // Use addRequirements() here to declare subsystem dependencies.
     roboDT = robotDT;
     distToTravel_in = inchesToTravel;
