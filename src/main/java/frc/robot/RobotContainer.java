@@ -39,8 +39,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain roboDT = new DriveTrain();
-  private final Harvester roboHarvest = new Harvester();
   private final Indexer roboIndexer = new Indexer();
+  private final Harvester roboHarvest = new Harvester(roboIndexer);
   private final Shooter roboShoot = new Shooter();
   private final Elevator roboElevator = new Elevator();
    // Define CameraServer
@@ -98,8 +98,6 @@ public class RobotContainer {
     yDriverButton.whenPressed(new moveIndexer(roboIndexer));
   }
 
-
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -109,4 +107,5 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }
+
 }
