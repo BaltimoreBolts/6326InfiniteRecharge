@@ -34,6 +34,7 @@ public class Indexer extends SubsystemBase {
   ShuffleboardTab indexerTab;
   NetworkTableEntry desiredRotationNT, currentRotationNT, desiredSpeedNT;
   NetworkTableEntry PCDash0, PCDash1, PCDash2, PCDash3;
+  boolean shiftIndexer = false; 
 
 
   /**
@@ -67,7 +68,21 @@ public class Indexer extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     UpdateDashboard();
+    int encoderCount = 0;
+
+    if (shiftIndexer) {    
+      while(encoderCount < 2730) {
+        this.Movement(0.25);
+        encoderCount = this.degreeToCounts(120, 8192);
+      } 
+
+      // We've shifted our encoder! 
+      this.Movement(0);
+      this.moveIndexer(false); 
+    
+    }
   }
+
   public int degreeToCounts(double degrees, int CPR ){
     int Counts = 0;
     Counts = (int)Math.ceil(CPR * degrees/360.0);
@@ -80,12 +95,14 @@ public class Indexer extends SubsystemBase {
     desiredSpeedNT.getDouble(0);
     desiredRotationNT.getDouble(0);
   } 
+
   public void ShiftPCArray(boolean PC0) {
-    PCArray[3] =PCArray[2];
+    PCArray[3] = PCArray[2];
     PCArray[2] = PCArray[1];
     PCArray[1] = PCArray[0];
     PCArray[0] = PC0;
   }
+
   public void SetPCArray(boolean[] inputArray){
     PCArray[0] = inputArray[0];
     PCArray[1] = inputArray[1];
@@ -93,13 +110,16 @@ public class Indexer extends SubsystemBase {
     PCArray[3] = inputArray[3];
     PCArray[0] = OpticalSensor.get();
   }
+
   //Move the indexer motor at a certain speed
   public void Movement (double speed){
     IndexerDonaldMotor.set(speed);
   } 
+
   public int getEncoderValue(){
     return (int)alternateEncoder.getPosition();
   }
+
   //Return value of first position optical sensor
   public boolean getP0(){
     return OpticalSensor.get();
@@ -109,4 +129,21 @@ public class Indexer extends SubsystemBase {
   public double getdesiredSpeed(){
     return desiredSpeedNT.getDouble(0);
   }
+
+  public boolean isIndexerFull() {
+    if (PCArray[3] == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public void moveIndexer(boolean newValue) {
+    shiftIndexer = newValue; 
+  }
+
+  public boolean IndexerDone() {
+    return shiftIndexer;
+  }
+
 }

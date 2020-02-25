@@ -15,17 +15,20 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.HarvesterConstants;
 
 public class Harvester extends SubsystemBase {
   private CANSparkMax harvesterMickeyMotor;
   private CANSparkMax harvesterMinnieMotor;
   private DigitalInput LimitSwitch0;
+  private Indexer roboIndexer;
   
   /**
    * Creates a new Harvester.
    */
-  public Harvester() {
+  public Harvester(Indexer robotIndex) {
+    roboIndexer = robotIndex;
     harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
     harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
     LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
@@ -33,10 +36,18 @@ public class Harvester extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (LimitSwitch0.get()){
-      harvesterMinnieMotor.set(0.5);
+    if (LimitSwitch0.get()) {
+      if (!(roboIndexer.isIndexerFull())) {
+        roboIndexer.moveIndexer(true); 
+
+        while(!roboIndexer.IndexerDone()) {
+          // Wait until the indexer is done shifting 
+        }
+        harvesterMinnieMotor.set(0.5);
+      }
   } else {
-    harvesterMinnieMotor.set(0);}
+      harvesterMinnieMotor.set(0);
+    }
 }   
     // This method will be called once per scheduler run
   public void setMickeySpeed(double speed){
