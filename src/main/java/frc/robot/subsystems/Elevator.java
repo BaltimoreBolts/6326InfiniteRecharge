@@ -14,10 +14,13 @@ import frc.robot.Constants.ElevatorConstants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
+
 
 public class Elevator extends SubsystemBase {
   private CANSparkMax ElevatorGoofyMotor;
   private CANSparkMax ElevatorPlutoMotor;
+  private static double matchTime;
 
   CANEncoder elevatorEncoder;
   /**
@@ -41,5 +44,7 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Elevator pos", elevatorEncoder.getPosition());
     // This method will be called once per scheduler run
+    matchTime = Timer.getMatchTime();
+
   }
 }
