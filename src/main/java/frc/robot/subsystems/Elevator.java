@@ -15,12 +15,16 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.Relay;
 
 
 public class Elevator extends SubsystemBase {
   private CANSparkMax ElevatorGoofyMotor;
   private CANSparkMax ElevatorPlutoMotor;
   private static double matchTime;
+  private Relay safety;
+
 
   CANEncoder elevatorEncoder;
   /**
@@ -30,6 +34,7 @@ public class Elevator extends SubsystemBase {
     ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushed);
     ElevatorPlutoMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_PLUTO,MotorType.kBrushed);
     elevatorEncoder = ElevatorGoofyMotor.getAlternateEncoder();
+    safety = new Relay(2, Relay.Direction.kForward);
   }
   
   public void setSpeed(double speed){
@@ -45,6 +50,11 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putNumber("Elevator pos", elevatorEncoder.getPosition());
     // This method will be called once per scheduler run
     matchTime = Timer.getMatchTime();
+    // Match time isn't exact, may want to have separate timer/
+    if (matchTime <= 5.0){
+      safety.set(Value.kOn);
+    }
+
 
   }
 }
