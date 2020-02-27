@@ -14,10 +14,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.HarvesterConstants;
-import frc.robot.commands.IndexerHarvestMayhem;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 public class Harvester extends SubsystemBase {
@@ -25,6 +26,7 @@ public class Harvester extends SubsystemBase {
   private CANSparkMax harvesterMinnieMotor;
   private DigitalInput LimitSwitch0;
   private Indexer roboIndexer;
+  private Relay harvesterRelease;
   
   /**
    * Creates a new Harvester.
@@ -34,6 +36,9 @@ public class Harvester extends SubsystemBase {
     harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
     harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
     LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
+    harvesterRelease = new Relay (0);
+
+    harvesterRelease.set(Relay.Value.kOn);
   }
 
   @Override
