@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.HarvesterConstants;
+import frc.robot.commands.IndexerHarvestMayhem;
+import frc.robot.subsystems.*;
 
 public class Harvester extends SubsystemBase {
   private CANSparkMax harvesterMickeyMotor;
@@ -36,20 +38,12 @@ public class Harvester extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (LimitSwitch0.get()) {
-      if (!(roboIndexer.isIndexerFull())) {
-        roboIndexer.moveIndexer(true); 
-
-        while(!roboIndexer.IndexerDone()) {
-          // Wait until the indexer is done shifting 
-        }
-        harvesterMinnieMotor.set(0.5);
-      }
-  } else {
-      harvesterMinnieMotor.set(0);
+    if (LimitSwitch0.get() == true){
+      new IndexerHarvestMayhem(roboIndexer, this);
     }
-}   
-    // This method will be called once per scheduler run
+  }
+
+  // This method will be called once per scheduler run
   public void setMickeySpeed(double speed){
     harvesterMickeyMotor.set(speed);
   }

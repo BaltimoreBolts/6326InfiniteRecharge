@@ -68,19 +68,6 @@ public class Indexer extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     UpdateDashboard();
-    int encoderCount = 0;
-
-    if (shiftIndexer) {    
-      while(encoderCount < 2730) {
-        this.Movement(0.25);
-        encoderCount = this.degreeToCounts(120, 8192);
-      } 
-
-      // We've shifted our encoder! 
-      this.Movement(0);
-      this.moveIndexer(false); 
-    
-    }
   }
 
   public int degreeToCounts(double degrees, int CPR ){
