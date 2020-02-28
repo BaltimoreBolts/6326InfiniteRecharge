@@ -29,7 +29,7 @@ public class Indexer extends SubsystemBase {
   private DigitalInput OpticalSensor;
   private CANEncoder alternateEncoder;
   private static final AlternateEncoderType kAltEncType = AlternateEncoderType.kQuadrature;
-  private boolean []PCArray = {false,false,false,false};
+  private boolean PCArray[] = {false,false,false,false};
 
   ShuffleboardTab indexerTab;
   NetworkTableEntry desiredRotationNT, currentRotationNT, desiredSpeedNT;
@@ -131,6 +131,10 @@ public class Indexer extends SubsystemBase {
 
   public boolean IndexerDone() {
     return shiftIndexer;
+  }
+
+  public boolean[] getPCArray() {
+    return PCArray;
   }
 
 }

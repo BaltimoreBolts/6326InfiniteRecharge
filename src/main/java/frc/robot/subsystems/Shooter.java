@@ -91,18 +91,24 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Shooter Encoder",ShooterEncoder.getPosition());
     SmartDashboard.putNumber("Shooter Vel",ShooterEncoder.getVelocity());
+
+    // Get distance data from camera 
     targetPose = cameraTable.getEntry("targetPose");
     targetArr = targetPose.getDoubleArray(targetArr);
+
+    // Save the most recent data
     x = targetArr[0];
     y = targetArr[1];
     angle = targetArr[2];
+
+    // Display on SmartDashboard
     SmartDashboard.putNumber("XDist", x);
     SmartDashboard.putNumber("yDist", y);
     SmartDashboard.putNumber("angleDist", angle);
     SmartDashboard.getNumber("fudge Factor", fudgeFactor);
     
     PIDTuner(); // Comment this out once we figure out our PID values.
-    getNeededRPM(x, fudgeFactor);
+    getNeededRPM();
   }
 
   public void PIDTuner() {
@@ -150,13 +156,14 @@ public class Shooter extends SubsystemBase {
   ** xdist - distance from power port in m from vision processing
   ** fudgeFactor - multiplication needed to turn velocity into RPM
   */
-  public double getNeededRPM(double xDist_m, double fudgeFactor) {
+  public double getNeededRPM() {
 
     double vel, RPM;
 
     // Convert xdist to feet
-    double xDist_ft = xDist_m*GenConstants.M_TO_FEET;
+    double xDist_ft = x * GenConstants.M_TO_FEET;
    
+    // Ya know math 
     vel = (xDist_ft/Constants.GenConstants.COS_ANGLE)
       *Math.pow(-Constants.GenConstants.G_FT_PER_SEC2/
       (Constants.GenConstants.INNER_PORT_HEIGHT_FT-Constants.GenConstants.TAN_ANGLE*xDist_ft
@@ -169,6 +176,10 @@ public class Shooter extends SubsystemBase {
 
     return RPM;
 
+  }
+
+  public void SetShooterSpeed(double speed) {
+    SMotorChip.set(speed);
   }
 
   

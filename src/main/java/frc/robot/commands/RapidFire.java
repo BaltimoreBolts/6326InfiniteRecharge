@@ -5,47 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands; 
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.*;
 
-public class ShootPowerCell extends CommandBase {
-  Shooter roboShooter;
-  
+public class RapidFire extends CommandBase {
+  Indexer indexer;
+  boolean[] indexerArray;
+
   /**
-   * Creates a new ShootPowerCell.
+   * Creates a new RapidFire.
    */
-  public ShootPowerCell(Shooter robotShooter) {
-    roboShooter = robotShooter;
+  public RapidFire(Indexer inputIndexer) {
+    indexer = inputIndexer;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(robotShooter);
+    addRequirements(indexer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    indexerArray = indexer.getPCArray();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //roboShooter.PIDTuner();
-    double calculatedRPM = 0;
-
-
+    indexer.Movement(0.25);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    indexer.Movement(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (indexerArray[0] == false && indexerArray[1]== false && indexerArray[2]== false && indexerArray[3]== false) {
+      return true;
+    } else {
+      return false;
+    } 
   }
 }
