@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.Relay;
 
 public class Elevator extends SubsystemBase {
   private CANSparkMax ElevatorGoofyMotor;
-  private CANSparkMax ElevatorPlutoMotor;
   private static double matchTime;
   private Relay safety;
 
@@ -31,8 +30,7 @@ public class Elevator extends SubsystemBase {
    * Creates a new Elevator.
    */
   public Elevator() {
-    ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushed);
-    ElevatorPlutoMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_PLUTO,MotorType.kBrushed);
+    ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushless);
     elevatorEncoder = ElevatorGoofyMotor.getAlternateEncoder();
     safety = new Relay(2, Relay.Direction.kForward);
   }
