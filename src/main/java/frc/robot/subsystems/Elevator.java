@@ -31,8 +31,12 @@ public class Elevator extends SubsystemBase {
    */
   public Elevator() {
     ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushless);
+    ElevatorGoofyMotor.restoreFactoryDefaults();
+    ElevatorGoofyMotor.setSmartCurrentLimit(40);
+    ElevatorGoofyMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     elevatorEncoder = ElevatorGoofyMotor.getAlternateEncoder();
     safety = new Relay(2, Relay.Direction.kForward);
+    ElevatorGoofyMotor.burnFlash();
   }
   
   public void setSpeed(double speed){

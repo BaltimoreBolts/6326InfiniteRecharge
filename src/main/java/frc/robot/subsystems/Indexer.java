@@ -41,10 +41,14 @@ public class Indexer extends SubsystemBase {
    * Creates a new Indexer.
    */
   public Indexer() {
-    IndexerDonaldMotor = new CANSparkMax (IndexerConstants.INDEXER_MOTOR_DONALD, MotorType.kBrushless); 
+    IndexerDonaldMotor = new CANSparkMax (IndexerConstants.INDEXER_MOTOR_DONALD, MotorType.kBrushless);
+    IndexerDonaldMotor.restoreFactoryDefaults();
+    IndexerDonaldMotor.setSmartCurrentLimit(30);
+    IndexerDonaldMotor.setIdleMode(CANSparkMax.IdleMode.kCoast); 
     OpticalSensor = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
     alternateEncoder = IndexerDonaldMotor.getAlternateEncoder(kAltEncType, 
                         Constants.GenConstants.REV_ENCODER_CPR);
+    IndexerDonaldMotor.burnFlash();
     //PCArray= {false,false,false,false};
     PCArray[0] = false;
     PCArray[1] = false;
