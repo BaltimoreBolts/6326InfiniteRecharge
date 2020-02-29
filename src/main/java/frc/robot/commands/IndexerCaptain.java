@@ -8,24 +8,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Harvester;
+import frc.robot.subsystems.*;
 
 
 public class IndexerCaptain extends CommandBase {
-  Harvester harvestMarket;
   Indexer indexerCaptain;
+  Shooter roboShooter;
   boolean isEmpty;
   boolean isFull;
 
   /**
    * Creates a new IndexerCaptain.
    */
-  public IndexerCaptain(Indexer inputIndexer, Harvester inputHarvester) {
+  public IndexerCaptain(Indexer inputIndexer, Shooter inputShooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     indexerCaptain = inputIndexer;
-    harvestMarket = inputHarvester;
-
+    roboShooter = inputShooter;
     addRequirements(indexerCaptain);
   }
 
@@ -39,7 +37,7 @@ public class IndexerCaptain extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!isFull) {
+    if (!isFull || roboShooter.getReadyToFire()) {
       // Shift the PC's up one level 
      indexerCaptain.Movement(0.25); 
     }
@@ -48,6 +46,8 @@ public class IndexerCaptain extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    indexerCaptain.ShiftPCArray(true);
+    indexerCaptain.Movement(0);
   }
 
   // Returns true when the command should end.

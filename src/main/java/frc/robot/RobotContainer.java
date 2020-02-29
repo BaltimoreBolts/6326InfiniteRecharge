@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.FirePowerCell;
 import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.moveIndexer;
 import frc.robot.commands.PowerCellSucker;
@@ -41,8 +42,8 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain roboDT = new DriveTrain();
   private final Indexer roboIndexer = new Indexer();
-  private final Harvester roboHarvest = new Harvester(roboIndexer);
   private final Shooter roboShoot = new Shooter();
+  private final Harvester roboHarvest = new Harvester(roboIndexer, roboShoot);
   private final Elevator roboElevator = new Elevator();
    // Define CameraServer
    public CameraServer RobotCamera;
@@ -95,7 +96,8 @@ public class RobotContainer {
     aDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.A);
     //dUpDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.DPAD.UP);
     yDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.Y);
-    rightDriverTrigger.whenPressed(new ShootPowerCell(roboShoot));
+
+    rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
     leftDriverTrigger.whenPressed(new RapidFire(roboIndexer));
     aDriverButton.whenPressed(new PowerCellSucker(roboHarvest));
     //dUpDriverButton. whenPressed(new ElevatorGoUp(roboElevator));

@@ -48,8 +48,8 @@ public class Shooter extends SubsystemBase {
   private NetworkTableEntry targetPose;
   private double targetArr[] = new double[]{0,0,0};
   private double x,y,angle = 0;
-  private double fudgeFactor = 0;
-
+  private double fudgeFactor = 0; 
+  private boolean readyToFire = false;
 
   /**
    * Creates a new Shooter.
@@ -179,10 +179,19 @@ public class Shooter extends SubsystemBase {
   }
 
   public void SetShooterSpeed(double speed) {
-    SMotorChip.set(speed);
+    shooterPID.setReference(speed, ControlType.kVelocity);
   }
 
-  
+  public boolean AtSpeed(double referenceSpeed) {
+    return ShooterEncoder.getVelocity() == referenceSpeed;
+  }
 
+  public boolean getReadyToFire() {
+    return readyToFire;
+  }
+
+  public void setReadyToFire(boolean newValue) {
+    readyToFire = newValue;
+  }
 
 }

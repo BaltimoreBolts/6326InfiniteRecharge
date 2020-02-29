@@ -27,12 +27,14 @@ public class Harvester extends SubsystemBase {
   private DigitalInput LimitSwitch0;
   private Indexer roboIndexer;
   private Relay harvesterRelease;
+  private Shooter roboShooter;
   
   /**
    * Creates a new Harvester.
    */
-  public Harvester(Indexer robotIndex) {
+  public Harvester(Indexer robotIndex, Shooter robotShooter) {
     roboIndexer = robotIndex;
+    roboShooter = robotShooter;
     harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
     harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
     LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
@@ -44,7 +46,7 @@ public class Harvester extends SubsystemBase {
   @Override
   public void periodic() {
     if (LimitSwitch0.get() == true){
-      new IndexerHarvestMayhem(roboIndexer, this);
+      new IndexerHarvestMayhem(roboIndexer, this, roboShooter);
     }
   }
 

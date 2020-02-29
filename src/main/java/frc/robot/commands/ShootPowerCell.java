@@ -12,6 +12,7 @@ import frc.robot.subsystems.Shooter;
 
 public class ShootPowerCell extends CommandBase {
   Shooter roboShooter;
+  double calculatedRPM = 0;
   
   /**
    * Creates a new ShootPowerCell.
@@ -25,27 +26,25 @@ public class ShootPowerCell extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    calculatedRPM = roboShooter.getNeededRPM();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //roboShooter.PIDTuner();
-    double calculatedRPM = 0;
-
-
+    roboShooter.SetShooterSpeed(calculatedRPM);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    roboShooter.setReadyToFire(true);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return roboShooter.AtSpeed(calculatedRPM);
   }
 }
