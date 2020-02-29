@@ -46,6 +46,9 @@ public class Harvester extends SubsystemBase {
     harvesterRelease = new Relay (0);
 
     harvesterRelease.set(Relay.Value.kOn);
+
+    harvesterMickeyMotor.burnFlash();
+    harvesterMinnieMotor.burnFlash();
   }
 
   @Override
