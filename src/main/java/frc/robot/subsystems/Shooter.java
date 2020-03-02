@@ -57,6 +57,15 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     SMotorChip = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_CHIP, MotorType.kBrushed);
     SMotorDale = new CANSparkMax(ShooterConstants.SHOOTER_MOTOR_DALE, MotorType.kBrushed);
+    SMotorChip.restoreFactoryDefaults();
+    SMotorDale.restoreFactoryDefaults();
+    SMotorChip.setSmartCurrentLimit(30);
+    SMotorDale.setSmartCurrentLimit(30);
+    SMotorChip.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    SMotorDale.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+    SMotorChip.burnFlash();
+    SMotorDale.burnFlash();
     // Set Dale to follow Chip, but inverted
     SMotorDale.restoreFactoryDefaults();
     SMotorDale.follow(SMotorChip,true);
@@ -176,6 +185,9 @@ public class Shooter extends SubsystemBase {
 
     return RPM;
 
+  }
+  public void getPitch(){
+    
   }
 
   public void SetShooterSpeed(double speed) {
