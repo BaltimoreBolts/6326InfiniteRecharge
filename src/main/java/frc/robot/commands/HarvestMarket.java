@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Harvester;
 import frc.robot.subsystems.Indexer;
@@ -14,35 +16,47 @@ import frc.robot.subsystems.Indexer;
 public class HarvestMarket extends CommandBase {
   Harvester harvestMarket;
   Indexer indexerCaptain;
-  
+  boolean isEmpty;
+  boolean isFull;
   /**
    * Creates a new HarvesterDemon.
    */
   public HarvestMarket(Harvester inputHarvester, Indexer inputIndexer) {
     harvestMarket = inputHarvester;
     indexerCaptain = inputIndexer;
-    // Use addRequirements() here to declare subsystem dependencies.
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    isEmpty = indexerCaptain.getP0();
+    isFull = indexerCaptain.isIndexerFull();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (isEmpty) {
+      harvestMarket.setMinnieSpeed(0.25);
+    }
+      
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    harvestMarket.setMinnieSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (harvestMarket.getP0() == false){
+     return true;
+    } else {
+     return false;
+    }
   }
 }
