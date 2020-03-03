@@ -24,8 +24,10 @@ public class ElevatorGoUp extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RoboVader.disengageRatchet();
     RoboVader.setSpeed(0.25);
   }
+  // Disengages ratchet and engages motor to move lift up
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -35,7 +37,10 @@ public class ElevatorGoUp extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RoboVader.engageRatchet();
+    RoboVader.setSpeed(0);
   }
+  // Engages ratchet again and disables motor to lock lift position
 
   // Returns true when the command should end.
   @Override
