@@ -28,11 +28,12 @@ public class Harvester extends SubsystemBase {
   private Indexer roboIndexer;
   private Relay harvesterRelease;
   private Shooter roboShooter;
-  
+
   /**
    * Creates a new Harvester.
    */
   public Harvester(Indexer robotIndex, Shooter robotShooter) {
+  
     roboIndexer = robotIndex;
     roboShooter = robotShooter;
     harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
@@ -53,5 +54,14 @@ public class Harvester extends SubsystemBase {
   // This method will be called once per scheduler run
   public void setMickeySpeed(double speed){
     harvesterMickeyMotor.set(speed);
+  }
+  
+  public void setMinnieSpeed(double speed){
+    harvesterMinnieMotor.set(speed);
+  }
+
+  //Return value of first position optical sensor
+  public boolean getP0(){
+    return LimitSwitch0.get();
   }
 }

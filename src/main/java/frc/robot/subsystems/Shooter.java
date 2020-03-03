@@ -178,7 +178,7 @@ public class Shooter extends SubsystemBase {
 
   }
 
-  public void SetShooterSpeed(double speed) {
+  public void  SetShooterSpeed(double speed) {
     shooterPID.setReference(speed, ControlType.kVelocity);
   }
 

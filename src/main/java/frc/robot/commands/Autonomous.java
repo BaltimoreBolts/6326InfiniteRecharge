@@ -7,25 +7,41 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Harvester;
+
+//cringe - i am alive dylan
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+
 public class Autonomous extends SequentialCommandGroup {
+  Shooter robotShooter;
+  Indexer roboIndexer;
+  Harvester roboHarvester;
+
   /**
    * Creates a new Autonomous.
    */
   public Autonomous (DriveTrain drive, Shooter shoot) {
     
+    //i was here
+
+    //Sets shooter speed, shoots all power cells, sets shooter speed to 0, and moves drive train
+
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     double inchesToTravel =18;
-    new AutonomousDrive(drive,inchesToTravel);
    for (int i = 0; i <3; i ++){
      new ShootPowerCell(shoot);
+     new FirePowerCell(robotShooter, roboIndexer, roboHarvester);
    } 
+    robotShooter.SetShooterSpeed(0);
+    new AutonomousDrive(drive,inchesToTravel);
   }
 }
