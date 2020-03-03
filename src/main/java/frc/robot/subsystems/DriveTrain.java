@@ -38,9 +38,25 @@ public class DriveTrain extends SubsystemBase {
     leftDriveMotor2 = new CANSparkMax(DriveConstants.LEFT_DRIVE_MOTOR2, MotorType.kBrushless);
     rightDriveMotor1 = new CANSparkMax(DriveConstants.RIGHT_DRIVE_MOTOR1, MotorType.kBrushless);
     rightDriveMotor2 = new CANSparkMax(DriveConstants.RIGHT_DRIVE_MOTOR2, MotorType.kBrushless);
+    leftDriveMotor1.restoreFactoryDefaults();
+    leftDriveMotor2.restoreFactoryDefaults();
+    rightDriveMotor1.restoreFactoryDefaults();
+    rightDriveMotor2.restoreFactoryDefaults();
+    leftDriveMotor1.setSmartCurrentLimit(40);
+    leftDriveMotor2.setSmartCurrentLimit(40);
+    rightDriveMotor1.setSmartCurrentLimit(40);
+    rightDriveMotor2.setSmartCurrentLimit(40);
+    leftDriveMotor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    leftDriveMotor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    rightDriveMotor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    rightDriveMotor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
     leftDriveMotor2.follow(leftDriveMotor1);
     rightDriveMotor2.follow(rightDriveMotor1);
+    leftDriveMotor1.burnFlash();
+    leftDriveMotor2.burnFlash();
+    rightDriveMotor1.burnFlash();
+    rightDriveMotor2.burnFlash();
 
     leftEncoder = leftDriveMotor2.getAlternateEncoder(kAltEncType,GenConstants.REV_ENCODER_CPR);
     rightEncoder = rightDriveMotor2.getAlternateEncoder(kAltEncType,GenConstants.REV_ENCODER_CPR);

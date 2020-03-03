@@ -21,9 +21,8 @@ import edu.wpi.first.wpilibj.Relay;
 
 public class Elevator extends SubsystemBase {
   private CANSparkMax ElevatorGoofyMotor;
-  private CANSparkMax ElevatorPlutoMotor;
   private static double matchTime;
-  private Relay safety;
+  private Relay elevatoRelay;
 
 
   CANEncoder elevatorEncoder;
@@ -31,14 +30,25 @@ public class Elevator extends SubsystemBase {
    * Creates a new Elevator.
    */
   public Elevator() {
-    ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushed);
-    ElevatorPlutoMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_PLUTO,MotorType.kBrushed);
+    ElevatorGoofyMotor = new CANSparkMax(ElevatorConstants.ELEVATOR_MOTOR_GOOFY,MotorType.kBrushless);
+    ElevatorGoofyMotor.restoreFactoryDefaults();
+    ElevatorGoofyMotor.setSmartCurrentLimit(40);
+    ElevatorGoofyMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     elevatorEncoder = ElevatorGoofyMotor.getAlternateEncoder();
-    safety = new Relay(2, Relay.Direction.kForward);
+    elevatoRelay = new Relay(2, Relay.Direction.kForward);
+    ElevatorGoofyMotor.burnFlash();
   }
   
   public void setSpeed(double speed){
     ElevatorGoofyMotor.set(speed);
+  }
+
+  public void engageRatchet () {
+    elevatoRelay.set(Value.kOff);
+  }
+
+  public void disengageRatchet() {
+    elevatoRelay.set(Value.kOn);
   }
 
   public double getElevatorEncoder() {
@@ -48,13 +58,5 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator pos", elevatorEncoder.getPosition());
-    // This method will be called once per scheduler run
-    matchTime = Timer.getMatchTime();
-    // Match time isn't exact, may want to have separate timer/
-    if (matchTime <= 5.0){
-      safety.set(Value.kOn);
-    }
-
-
   }
 }

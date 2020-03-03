@@ -38,10 +38,20 @@ public class Harvester extends SubsystemBase {
     roboShooter = robotShooter;
     harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
     harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
+    harvesterMickeyMotor.restoreFactoryDefaults();
+    harvesterMinnieMotor.restoreFactoryDefaults();
+    harvesterMickeyMotor.setSmartCurrentLimit(30);
+    harvesterMinnieMotor.setSmartCurrentLimit(30);
+    harvesterMickeyMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    harvesterMinnieMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+   
     LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
     harvesterRelease = new Relay (0);
 
     harvesterRelease.set(Relay.Value.kOn);
+
+    harvesterMickeyMotor.burnFlash();
+    harvesterMinnieMotor.burnFlash();
   }
 
   @Override
