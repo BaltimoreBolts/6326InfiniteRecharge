@@ -32,10 +32,9 @@ public class Autonomous extends SequentialCommandGroup {
 
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-   //double inchesToTravel = 18;
+    //double inchesToTravel = 18;
     //new AutonomousShoot();
     //new AutonomousDrive(drive,inchesToTravel);
-
     super(
       new AutonomousShoot(shoot),
       new AutonomousDrive(drive,18)
