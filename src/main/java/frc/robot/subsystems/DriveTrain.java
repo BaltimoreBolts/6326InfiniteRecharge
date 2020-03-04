@@ -82,12 +82,19 @@ public class DriveTrain extends SubsystemBase {
   public double getRightPosition() {
     return rightEncoder.getPosition();
   }
-  public int inchesToCounts(double inches, int CPR ){
-    int Counts = 0;
+  public double inchesToCounts(double inches, int CPR ){
+    double Counts = 0;
     // Due to the diameter of the wheels being 8, we divided by 8 PI which is the circumfrence/
-    Counts = (int)Math.ceil(CPR * inches/(8* Math.PI));
+    //Counts = (int)Math.ceil(CPR * inches/(8* Math.PI));
+    Counts = inches / (3 * Math.PI);
     return Counts;
 
   }
+
+  public void resetEncoders() {
+    rightEncoder.setPosition(0);
+    leftEncoder.setPosition(0);
+  }
+
 }
 

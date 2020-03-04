@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
@@ -18,8 +19,8 @@ public class AutonomousDrive extends CommandBase {
    * Creates a new Autonomous.
    */
   double speed = 0; 
-  int desiredLeftPosition = 0;
-  int desiredRightPosition = 0;
+  double desiredLeftPosition = 0;
+  double desiredRightPosition = 0;
   int currentLeftPosition = 0;
   int currentRightPosition = 0;
   int initialRightPosition = 0;
@@ -39,6 +40,8 @@ public class AutonomousDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    roboDT.resetEncoders();
+    
     initialLeftPosition = (int)roboDT.getLeftPosition();
     initialRightPosition = (int)roboDT.getRightPosition();
 
@@ -47,7 +50,7 @@ public class AutonomousDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    roboDT.arcadeDrive(0, 0.5);
+    roboDT.arcadeDrive(0, 0.3);
   }
 
   // Called once the command ends or is interrupted.
@@ -64,9 +67,16 @@ public class AutonomousDrive extends CommandBase {
     currentLeftPosition = (int)roboDT.getLeftPosition();
    
     desiredRightPosition = roboDT.inchesToCounts(distToTravel_in, 
-    Constants.GenConstants.REV_ENCODER_CPR)+initialRightPosition;
+    Constants.GenConstants.REV_ENCODER_CPR) + initialRightPosition;
     currentRightPosition = (int)roboDT.getRightPosition();
     
+    SmartDashboard.putNumber("Desired Left", desiredLeftPosition);
+    SmartDashboard.putNumber("Desired Right", desiredRightPosition);
+    SmartDashboard.putNumber("Current Left", currentLeftPosition);
+    SmartDashboard.putNumber("Current Right", currentRightPosition);
+    SmartDashboard.putNumber("Initial Left", initialLeftPosition);
+    SmartDashboard.putNumber("Initial Right", initialRightPosition);
+
     if ((currentRightPosition >= desiredRightPosition) && (currentLeftPosition<=desiredLeftPosition)){
       return true;
   } else {

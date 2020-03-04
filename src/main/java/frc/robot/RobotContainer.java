@@ -16,6 +16,8 @@ import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.moveIndexer;
 import frc.robot.commands.PowerCellSucker;
 import frc.robot.commands.RapidFire;
+import frc.robot.commands.Autonomous;
+import frc.robot.commands.AutonomousDrive;
 import frc.robot.commands.ElevatorGoUp;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -25,6 +27,7 @@ import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controller;
 import frc.robot.subsystems.Elevator;
@@ -51,8 +54,7 @@ public class RobotContainer {
   public CameraServer RobotCamera;
   public UsbCamera frontRobotCamera;
  
-  
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final AutonomousDrive autoCommand = new AutonomousDrive(roboDT, 18);
   private XboxController driver = new XboxController(OIConstants.DRIVER_CONTROLLER);
   private XboxController operator = new XboxController(OIConstants.OPERATOR_CONTROLLER);
 
@@ -69,12 +71,14 @@ public class RobotContainer {
 
     // Set default drive command
     // Negative in the Y direction makes robot go forward 2/6
+    
     roboDT.setDefaultCommand(
       new RunCommand(() -> roboDT
         .arcadeDrive(driver.getRawAxis(Controller.XBOX.STICK.LEFT.X), 
         -driver.getRawAxis(Controller.XBOX.STICK.LEFT.Y)), roboDT));
         RobotCamera = CameraServer.getInstance();
     frontRobotCamera = RobotCamera.startAutomaticCapture(0);
+    
     /** serverOne = CameraServer.getInstance();
 	    //serverOne.startAutomaticCapture();
 	    //serverOne.startAutomaticCapture(0);
@@ -111,7 +115,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return autoCommand;
   }
 
 }

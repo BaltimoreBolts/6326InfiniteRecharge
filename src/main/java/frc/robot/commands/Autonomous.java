@@ -36,7 +36,7 @@ public class Autonomous extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
    double inchesToTravel = 18;
-   for (int i = 0; i <3; i ++) {
+   for (int i = 0; i <3; i++) {
      //new FirePowerCell(robotShooter, roboIndexer, roboHarvester);
    } 
     robotShooter.SetShooterSpeed(0);
