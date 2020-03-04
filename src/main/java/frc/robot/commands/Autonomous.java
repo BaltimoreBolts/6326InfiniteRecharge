@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
@@ -36,10 +35,9 @@ public class Autonomous extends SequentialCommandGroup {
 
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-   double inchesToTravel =18;
-   for (int i = 0; i <3; i ++){
-     new ShootPowerCell(shoot);
-     new FirePowerCell(robotShooter, roboIndexer, roboHarvester);
+   double inchesToTravel = 18;
+   for (int i = 0; i <3; i ++) {
+     //new FirePowerCell(robotShooter, roboIndexer, roboHarvester);
    } 
     robotShooter.SetShooterSpeed(0);
     new AutonomousDrive(drive,inchesToTravel);

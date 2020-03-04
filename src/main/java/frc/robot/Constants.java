@@ -35,6 +35,7 @@ public final class Constants {
      public static final class OIConstants {
         //These need to be public within the class so they are accessible
         public static final int DRIVER_CONTROLLER = 0;
+        public static final int OPERATOR_CONTROLLER = 1;
     }
 
     public static final class DriveConstants {

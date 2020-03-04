@@ -38,6 +38,7 @@ import edu.wpi.cscore.UsbCamera;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain roboDT = new DriveTrain();
@@ -45,19 +46,20 @@ public class RobotContainer {
   private final Shooter roboShoot = new Shooter();
   private final Harvester roboHarvest = new Harvester(roboIndexer, roboShoot);
   private final Elevator roboElevator = new Elevator();
-   // Define CameraServer
-   public CameraServer RobotCamera;
-   public UsbCamera frontRobotCamera;
+  
+  // Define CameraServer
+  public CameraServer RobotCamera;
+  public UsbCamera frontRobotCamera;
  
   
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private XboxController driver = new XboxController(OIConstants.DRIVER_CONTROLLER);
+  private XboxController operator = new XboxController(OIConstants.OPERATOR_CONTROLLER);
 
   JoystickButton rightDriverTrigger;
   JoystickButton leftDriverTrigger;
-  JoystickButton aDriverButton;
-  JoystickButton dUpDriverButton;
-  JoystickButton yDriverButton;
+  JoystickButton aOperatorButton;
+  JoystickButton yOperatorButton;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -93,15 +95,13 @@ public class RobotContainer {
   private void configureButtonBindings() {  
     rightDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.TRIGGER.RIGHT);
     leftDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.TRIGGER.RIGHT);
-    aDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.A);
-    //dUpDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.DPAD.UP);
-    yDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.Y);
+    aOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.A);
+    yOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.Y);
 
     rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
     leftDriverTrigger.whenPressed(new RapidFire(roboIndexer));
-    aDriverButton.whenPressed(new PowerCellSucker(roboHarvest));
-    //dUpDriverButton. whenPressed(new ElevatorGoUp(roboElevator));
-    yDriverButton.whenPressed(new moveIndexer(roboIndexer));
+    aOperatorButton.whenPressed(new PowerCellSucker(roboHarvest));
+    yOperatorButton.whenPressed(new ElevatorGoUp(roboElevator));
   }
 
   /**
