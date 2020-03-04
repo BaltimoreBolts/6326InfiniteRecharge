@@ -20,9 +20,6 @@ import frc.robot.subsystems.Harvester;
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 
 public class Autonomous extends SequentialCommandGroup {
-  Shooter robotShooter;
-  Indexer roboIndexer;
-  Harvester roboHarvester;
 
   /**
    * Creates a new Autonomous.
@@ -35,11 +32,13 @@ public class Autonomous extends SequentialCommandGroup {
 
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-   double inchesToTravel = 18;
-   for (int i = 0; i <3; i++) {
-     //new FirePowerCell(robotShooter, roboIndexer, roboHarvester);
-   } 
-    robotShooter.SetShooterSpeed(0);
-    new AutonomousDrive(drive,inchesToTravel);
+   //double inchesToTravel = 18;
+    //new AutonomousShoot();
+    //new AutonomousDrive(drive,inchesToTravel);
+
+    super(
+      new AutonomousShoot(shoot),
+      new AutonomousDrive(drive,18)
+    );
   }
 }

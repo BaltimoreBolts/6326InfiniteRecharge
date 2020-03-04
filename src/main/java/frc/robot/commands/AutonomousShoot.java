@@ -19,10 +19,12 @@ public class AutonomousShoot extends CommandBase {
   /**
    * Creates a new AutonomousShooter.
    */
-  public AutonomousShoot() {
+  public AutonomousShoot(Shooter inputShooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+    robotShooter = inputShooter;
+    
   }
-
+  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -33,7 +35,9 @@ public class AutonomousShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    for (int i = 0; i <3; i++) {
     new FirePowerCell(robotShooter, roboIndexer, roboHarvester);
+    }
     robotShooter.SetShooterSpeed(0);
   }
 
@@ -45,6 +49,6 @@ public class AutonomousShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
