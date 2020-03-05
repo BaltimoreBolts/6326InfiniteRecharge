@@ -21,12 +21,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants;
 import frc.robot.Constants.GenConstants;
+
+import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.AlternateEncoderType;
 import java.lang.Math;
 
 public class Indexer extends SubsystemBase {
   private CANSparkMax IndexerDonaldMotor;
-  private DigitalInput OpticalSensor;
+  //private DigitalInput OpticalSensor;
+  private TimeOfFlight IndexerTOF;
+
   private CANEncoder alternateEncoder;
   private static final AlternateEncoderType kAltEncType = AlternateEncoderType.kQuadrature;
   private boolean PCArray[] = {false,false,false,false};
@@ -45,7 +49,8 @@ public class Indexer extends SubsystemBase {
     IndexerDonaldMotor.restoreFactoryDefaults();
     IndexerDonaldMotor.setSmartCurrentLimit(30);
     IndexerDonaldMotor.setIdleMode(CANSparkMax.IdleMode.kCoast); 
-    OpticalSensor = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
+   // OpticalSensor = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
+    IndexerTOF = new TimeOfFlight(IndexerConstants.INDEXER_TOF);
     alternateEncoder = IndexerDonaldMotor.getAlternateEncoder(kAltEncType, 
                         Constants.GenConstants.REV_ENCODER_CPR);
     IndexerDonaldMotor.burnFlash();
@@ -99,7 +104,8 @@ public class Indexer extends SubsystemBase {
     PCArray[1] = inputArray[1];
     PCArray[2] = inputArray[2];
     PCArray[3] = inputArray[3];
-    PCArray[0] = OpticalSensor.get();
+   // PCArray[0] = OpticalSensor.get();
+   PCArray [0] = IndexerTOF.getRange() > 0.1;
   }
 
   //Move the indexer motor at a certain speed
@@ -113,7 +119,8 @@ public class Indexer extends SubsystemBase {
 
   //Return value of first position optical sensor
   public boolean getP0(){
-    return OpticalSensor.get();
+    //return OpticalSensor.get();
+    return IndexerTOF.getRange() > 0.1;
   }
 
   //For testing, this will be disabled later

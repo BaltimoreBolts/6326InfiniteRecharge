@@ -53,6 +53,7 @@ public final class Constants {
         public static final int HARVESTER_MOTOR_MICKEY = 5;
         public static final int HARVESTER_MOTOR_MINNIE = 6;
         public static final int HARVESTER_LIMIT_SWITCH = 0;
+        public static final int HARVESTER_TOF = 11;
 
      }
     public static final class IndexerConstants {
@@ -62,6 +63,7 @@ public final class Constants {
         public static final int INDEXER_LIMIT_SWITCH3 = 3;
         public static final int INDEXER_LIMIT_SWITCH4 = 4;
         public static final int INDEXER_LIMIT_SWITCH5 = 5;
+        public static final int INDEXER_TOF = 12;
     } 
 
     public static final class ElevatorConstants {

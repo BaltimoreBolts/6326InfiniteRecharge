@@ -9,12 +9,14 @@ package frc.robot.subsystems;
 
 import javax.lang.model.util.ElementScanner6;
 
+import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.HarvesterConstants;
@@ -24,10 +26,11 @@ import frc.robot.subsystems.*;
 public class Harvester extends SubsystemBase {
   private CANSparkMax harvesterMickeyMotor;
   private CANSparkMax harvesterMinnieMotor;
-  private DigitalInput LimitSwitch0;
+  //private DigitalInput LimitSwitch0;
   private Indexer roboIndexer;
   private Relay harvesterRelease;
   private Shooter roboShooter;
+  private TimeOfFlight harvesterTOF;
 
   /**
    * Creates a new Harvester.
@@ -38,6 +41,7 @@ public class Harvester extends SubsystemBase {
     roboShooter = robotShooter;
     harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
     harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
+    harvesterTOF = new TimeOfFlight(HarvesterConstants.HARVESTER_TOF);
     harvesterMickeyMotor.restoreFactoryDefaults();
     harvesterMinnieMotor.restoreFactoryDefaults();
     harvesterMickeyMotor.setSmartCurrentLimit(30);
@@ -45,7 +49,7 @@ public class Harvester extends SubsystemBase {
     harvesterMickeyMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     harvesterMinnieMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
    
-    LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
+   // LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
     harvesterRelease = new Relay (0);
 
     harvesterRelease.set(Relay.Value.kOn);
@@ -56,7 +60,8 @@ public class Harvester extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (LimitSwitch0.get() == true){
+    SmartDashboard.putBoolean("Harvester TOF", this.getP0());
+   if (this.getP0() == true){
       new IndexerHarvestMayhem(roboIndexer, this, roboShooter);
     }
   }
@@ -72,6 +77,7 @@ public class Harvester extends SubsystemBase {
 
   //Return value of first position optical sensor
   public boolean getP0(){
-    return LimitSwitch0.get();
+   // return LimitSwitch0.get();
+    return harvesterTOF.getRange() > 0.1;
   }
 }
