@@ -51,7 +51,7 @@ public class HarvestMarket extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (harvestMarket.getP0() == false){
+    if (harvestMarket.getHarvesterTOF() == false){
      return true;
     } else {
      return false;

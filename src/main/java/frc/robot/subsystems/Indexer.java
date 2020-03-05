@@ -9,18 +9,14 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANPIDController;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants;
-import frc.robot.Constants.GenConstants;
 
 import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.AlternateEncoderType;
@@ -78,6 +74,7 @@ public class Indexer extends SubsystemBase {
     // This method will be called once per scheduler run
     UpdateDashboard();
     SmartDashboard.putBoolean("Indexer TOF", this.getP0());
+    SmartDashboard.putNumber("Indexer TOF Val", IndexerTOF.getRange());
   }
 
   public int degreeToCounts(double degrees, int CPR ){
@@ -120,8 +117,10 @@ public class Indexer extends SubsystemBase {
 
   //Return value of first position optical sensor
   public boolean getP0(){
+    double distance = IndexerTOF.getRange();
     //return OpticalSensor.get();
-    return IndexerTOF.getRange() > 0.1;
+    // Because the ball is curved we want to stop when the center of the ball is in front of the sensor hence the range 
+    return distance >= 15 && distance <= 25;
   }
 
   //For testing, this will be disabled later

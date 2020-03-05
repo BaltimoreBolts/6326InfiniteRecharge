@@ -9,25 +9,18 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FirePowerCell;
-import frc.robot.commands.ShootPowerCell;
-import frc.robot.commands.moveIndexer;
 import frc.robot.commands.PowerCellSucker;
 import frc.robot.commands.RapidFire;
-import frc.robot.commands.Autonomous;
 import frc.robot.commands.AutonomousDrive;
 import frc.robot.commands.ElevatorGoUp;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Harvester;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controller;
 import frc.robot.subsystems.Elevator;
@@ -43,7 +36,6 @@ import edu.wpi.cscore.UsbCamera;
 public class RobotContainer {
   
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain roboDT = new DriveTrain();
   private final Indexer roboIndexer = new Indexer();
   private final Shooter roboShoot = new Shooter();

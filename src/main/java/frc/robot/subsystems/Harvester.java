@@ -7,21 +7,15 @@
 
 package frc.robot.subsystems;
 
-import javax.lang.model.util.ElementScanner6;
-
 import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.HarvesterConstants;
 import frc.robot.commands.*;
-import frc.robot.subsystems.*;
 
 public class Harvester extends SubsystemBase {
   private CANSparkMax harvesterMickeyMotor;
@@ -60,9 +54,10 @@ public class Harvester extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("Harvester TOF", this.getP0());
-   if (this.getP0() == true){
-      new IndexerHarvestMayhem(roboIndexer, this, roboShooter);
+    SmartDashboard.putBoolean("Harvester TOF", this.getHarvesterTOF());
+    SmartDashboard.putNumber("Harvester TOF Val", harvesterTOF.getRange());
+    if (this.getHarvesterTOF() == true){
+        new IndexerHarvestMayhem(roboIndexer, this, roboShooter);
     }
   }
 
@@ -76,8 +71,9 @@ public class Harvester extends SubsystemBase {
   }
 
   //Return value of first position optical sensor
-  public boolean getP0(){
-   // return LimitSwitch0.get();
-    return harvesterTOF.getRange() > 0.1;
+  public boolean getHarvesterTOF(){
+    // return LimitSwitch0.get();
+    // Because the ball is curved we want to stop when the center of the ball is in front of the sensor hence the range 
+    return harvesterTOF.getRange() >= 15 && harvesterTOF.getRange() <= 25; 
   }
 }
