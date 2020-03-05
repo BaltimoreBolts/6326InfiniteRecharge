@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj.Relay;
 
 
@@ -20,7 +21,7 @@ import edu.wpi.first.wpilibj.Relay;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  private Command autonomousCommand;
 
   private RobotContainer m_robotContainer;
   private Relay LED;
@@ -70,11 +71,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    if (autonomousCommand != null) {
+      autonomousCommand.schedule();
+    }
+    if (AutonomousMode == 1){
+      Move then Shoot;
+    } else if (AutonomousMode == 2){
+      Shoot then Move;
+    }else {
+      Execute order 66;
     }
   }
 
