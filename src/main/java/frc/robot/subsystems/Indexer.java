@@ -77,6 +77,7 @@ public class Indexer extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     UpdateDashboard();
+    SmartDashboard.putBoolean("Indexer TOF", this.getP0());
   }
 
   public int degreeToCounts(double degrees, int CPR ){
