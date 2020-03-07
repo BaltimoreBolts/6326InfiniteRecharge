@@ -14,9 +14,9 @@ import frc.robot.subsystems.Indexer;
 public class moveIndexer extends CommandBase {
   Indexer roboIndexer;
   double speed = 0; 
-  int currentPosition = 0;
-  int desiredPosition = 0;
-  int initialPosition= 0;
+  double currentPosition = 0;
+  double desiredPosition = 0;
+  double initialPosition= 0;
   double degreesToRotate = 120;
   /**
    * Creates a new moveIndexer.

@@ -32,15 +32,19 @@ public class IndexerCaptain extends CommandBase {
   public void initialize() {
     isEmpty = indexerCaptain.getP0();
     isFull = indexerCaptain.isIndexerFull();
+    indexerCaptain.ResetEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    indexerCaptain.Movement(-0.35);
+    /**
     if (!isFull || roboShooter.getReadyToFire()) {
       // Shift the PC's up one level 
-     indexerCaptain.Movement(0.25); 
+     indexerCaptain.Movement(-0.25); 
     }
+    **/
   }
 
   // Called once the command ends or is interrupted.
@@ -53,7 +57,7 @@ public class IndexerCaptain extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (indexerCaptain.getEncoderValue() < 2730) {
+    if ((indexerCaptain.getEncoderValue() * 3.0) <= 1.0) {
       return false; 
     } else {
       return true;

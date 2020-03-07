@@ -10,10 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.FirePowerCell;
+import frc.robot.commands.IndexerCaptain;
 import frc.robot.commands.PowerCellSucker;
 import frc.robot.commands.RapidFire;
 import frc.robot.commands.AutonomousDrive;
+import frc.robot.commands.AutonomousShoot;
 import frc.robot.commands.ElevatorGoUp;
+import frc.robot.commands.Autonomous;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Harvester;
 import frc.robot.subsystems.Shooter;
@@ -21,6 +24,7 @@ import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Controller;
 import frc.robot.subsystems.Elevator;
@@ -46,7 +50,8 @@ public class RobotContainer {
   public CameraServer RobotCamera;
   public UsbCamera frontRobotCamera;
  
-  private final AutonomousDrive autoCommand = new AutonomousDrive(roboDT, 18);
+  private final Command autoCommand = new AutonomousDrive(roboDT, 18);
+  private final Command autoShoot = new AutonomousShoot(roboShoot); // Stupid way to do this but a hot fix for testing 
   private XboxController driver = new XboxController(OIConstants.DRIVER_CONTROLLER);
   private XboxController operator = new XboxController(OIConstants.OPERATOR_CONTROLLER);
 
@@ -54,6 +59,8 @@ public class RobotContainer {
   JoystickButton leftDriverTrigger;
   JoystickButton aOperatorButton;
   JoystickButton yOperatorButton;
+  JoystickButton xDriverButton;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -93,11 +100,13 @@ public class RobotContainer {
     leftDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.TRIGGER.RIGHT);
     aOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.A);
     yOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.Y);
+    xDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.X);
 
     rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
     leftDriverTrigger.whenPressed(new RapidFire(roboIndexer));
     aOperatorButton.whenPressed(new PowerCellSucker(roboHarvest));
     yOperatorButton.whenPressed(new ElevatorGoUp(roboElevator));
+    xDriverButton.whenPressed(new IndexerCaptain(roboIndexer, roboShoot));
   }
 
   /**
@@ -105,9 +114,15 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand(boolean value) {
     // An ExampleCommand will run in autonomous
-    return autoCommand;
+    // Again really dumb way to do this but the SequentialCommandGroup was breaking our code 
+    if (value) {
+      return autoCommand;
+    } else {
+      return autoShoot;
+    }
+    
   }
 
 }

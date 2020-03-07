@@ -20,13 +20,14 @@ public class ShootPowerCell extends CommandBase {
   public ShootPowerCell(Shooter robotShooter) {
     roboShooter = robotShooter;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(robotShooter);
+    addRequirements(roboShooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    calculatedRPM = roboShooter.getNeededRPM();
+    //calculatedRPM = roboShooter.getNeededRPM();
+    calculatedRPM = 0.15;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

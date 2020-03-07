@@ -16,6 +16,7 @@ public class HarvestMarket extends CommandBase {
   Indexer indexerCaptain;
   boolean isEmpty;
   boolean isFull;
+  
   /**
    * Creates a new HarvesterDemon.
    */

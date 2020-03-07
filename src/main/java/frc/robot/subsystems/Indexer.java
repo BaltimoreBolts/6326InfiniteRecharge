@@ -66,7 +66,6 @@ public class Indexer extends SubsystemBase {
     PCDash2 = indexerTab.add("PC2",PCArray[2]).getEntry();
     PCDash3 = indexerTab.add("PC3",PCArray[3]).getEntry();
 
-  
   }
 
   @Override
@@ -75,6 +74,7 @@ public class Indexer extends SubsystemBase {
     UpdateDashboard();
     SmartDashboard.putBoolean("Indexer TOF", this.getP0());
     SmartDashboard.putNumber("Indexer TOF Val", IndexerTOF.getRange());
+    SmartDashboard.putNumber("Indexer Encoder", this.getEncoderValue());
   }
 
   public int degreeToCounts(double degrees, int CPR ){
@@ -111,8 +111,8 @@ public class Indexer extends SubsystemBase {
     IndexerDonaldMotor.set(speed);
   } 
 
-  public int getEncoderValue(){
-    return (int)alternateEncoder.getPosition();
+  public double getEncoderValue(){
+    return alternateEncoder.getPosition();
   }
 
   //Return value of first position optical sensor
@@ -146,6 +146,10 @@ public class Indexer extends SubsystemBase {
 
   public boolean[] getPCArray() {
     return PCArray;
+  }
+
+  public void ResetEncoder() {
+    alternateEncoder.setPosition(0);
   }
 
 }
