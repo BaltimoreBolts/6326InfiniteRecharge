@@ -8,12 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.AutonomousShoot;
+import frc.robot.commands.ShootPowerCell;
 import edu.wpi.first.wpilibj.Relay;
 
 
@@ -26,7 +28,7 @@ import edu.wpi.first.wpilibj.Relay;
 public class Robot extends TimedRobot {
   private Command autonomousCommand1, autonomousCommand2;
   private double AutonomousMode = 0;
-  private RobotContainer m_robotContainer;
+  private RobotContainer robotContainer;
   private Relay LED;
 
   /**
@@ -37,7 +39,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
     SmartDashboard.putNumber("Autonomous Mode", AutonomousMode);
     LED = new Relay(1);
     LED.set(Relay.Value.kOn);
@@ -75,13 +77,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    autonomousCommand1 = m_robotContainer.getAutonomousCommand(true);
-    autonomousCommand2 = m_robotContainer.getAutonomousCommand(false);
-
+    autonomousCommand1 = robotContainer.getAutonomousCommand(true);
+    autonomousCommand2 = robotContainer.getAutonomousCommand(false);
+    System.out.println("\n\nInside Autonomous Init\n\n");
     // schedule the autonomous command (example)
     if (autonomousCommand1 != null) {
+      //System.out.println("\n\nCalling Autonomous Shoot\n\n");
       //autonomousCommand2.schedule();
-      //autonomousCommand1.schedule();
+      autonomousCommand1.schedule();
     }
   }
 
@@ -108,6 +111,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    
   }
 
   @Override

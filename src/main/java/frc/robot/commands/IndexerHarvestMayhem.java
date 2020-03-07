@@ -21,7 +21,7 @@ public class IndexerHarvestMayhem extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new IndexerCaptain(inputIndexer, inputShooter),
+      new IndexerCaptain(inputIndexer),
       new HarvestMarket(inputHarvester, inputIndexer)
     );
     

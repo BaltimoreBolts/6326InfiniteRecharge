@@ -17,8 +17,8 @@ public class ShootPowerCell extends CommandBase {
   /**
    * Creates a new ShootPowerCell.
    */
-  public ShootPowerCell(Shooter robotShooter) {
-    roboShooter = robotShooter;
+  public ShootPowerCell(Shooter inputShooter) {
+    roboShooter = inputShooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(roboShooter);
   }
@@ -26,14 +26,15 @@ public class ShootPowerCell extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //calculatedRPM = roboShooter.getNeededRPM();
-    calculatedRPM = 0.15;
+    calculatedRPM = roboShooter.getNeededRPM();
+    //calculatedRPM = -0.15; // Comment this in to set speed directly
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //roboShooter.PIDTuner();
+    System.out.println("\n\nSetting shooter speed\n\n");
     roboShooter.SetShooterSpeed(calculatedRPM);
   }
 
@@ -46,6 +47,7 @@ public class ShootPowerCell extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return roboShooter.AtSpeed(calculatedRPM);
+    //return roboShooter.AtSpeed(calculatedRPM);
+    return true;
   }
 }

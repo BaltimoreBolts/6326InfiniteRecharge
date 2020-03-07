@@ -31,7 +31,7 @@ public class AutonomousShoot extends CommandBase {
   @Override
   public void initialize() {
     
-  }
+  } 
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -40,7 +40,7 @@ public class AutonomousShoot extends CommandBase {
       //new FirePowerCell(robotShooter, roboIndexer, roboHarvester);
     //}
     new FirePowerCell(robotShooter, roboIndexer, roboHarvester);
-    robotShooter.SetShooterSpeed(0);
+    //robotShooter.SetShooterSpeed(0);
   }
 
   // Called once the command ends or is interrupted.

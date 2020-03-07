@@ -13,7 +13,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 
-
+ 
 public class AutonomousDrive extends CommandBase {
   /**
    * Creates a new Autonomous.
@@ -44,6 +44,10 @@ public class AutonomousDrive extends CommandBase {
     
     initialLeftPosition = (int)roboDT.getLeftPosition();
     initialRightPosition = (int)roboDT.getRightPosition();
+    desiredLeftPosition = 0;
+    desiredRightPosition = 0;
+    initialLeftPosition = 0;
+    initialRightPosition = 0;
 
   }
 

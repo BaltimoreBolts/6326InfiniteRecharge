@@ -75,6 +75,7 @@ public class Indexer extends SubsystemBase {
     SmartDashboard.putBoolean("Indexer TOF", this.getP0());
     SmartDashboard.putNumber("Indexer TOF Val", IndexerTOF.getRange());
     SmartDashboard.putNumber("Indexer Encoder", this.getEncoderValue());
+    SmartDashboard.putBooleanArray("Indexer Array", PCArray);
   }
 
   public int degreeToCounts(double degrees, int CPR ){

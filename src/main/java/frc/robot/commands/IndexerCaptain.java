@@ -13,17 +13,16 @@ import frc.robot.subsystems.*;
 
 public class IndexerCaptain extends CommandBase {
   Indexer indexerCaptain;
-  Shooter roboShooter;
   boolean isEmpty;
   boolean isFull;
 
   /**
    * Creates a new IndexerCaptain.
    */
-  public IndexerCaptain(Indexer inputIndexer, Shooter inputShooter) {
+  public IndexerCaptain(Indexer inputIndexer) {
     // Use addRequirements() here to declare subsystem dependencies.
     indexerCaptain = inputIndexer;
-    roboShooter = inputShooter;
+    //roboShooter = inputShooter;
     addRequirements(indexerCaptain);
   }
 
@@ -52,6 +51,7 @@ public class IndexerCaptain extends CommandBase {
   public void end(boolean interrupted) {
     indexerCaptain.ShiftPCArray(true);
     indexerCaptain.Movement(0);
+    //roboShooter.SetShooterSpeed(0);
   }
 
   // Returns true when the command should end.

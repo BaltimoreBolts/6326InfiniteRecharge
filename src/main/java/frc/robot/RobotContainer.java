@@ -13,6 +13,7 @@ import frc.robot.commands.FirePowerCell;
 import frc.robot.commands.IndexerCaptain;
 import frc.robot.commands.PowerCellSucker;
 import frc.robot.commands.RapidFire;
+import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.AutonomousDrive;
 import frc.robot.commands.AutonomousShoot;
 import frc.robot.commands.ElevatorGoUp;
@@ -50,8 +51,8 @@ public class RobotContainer {
   public CameraServer RobotCamera;
   public UsbCamera frontRobotCamera;
  
-  private final Command autoCommand = new AutonomousDrive(roboDT, 18);
-  private final Command autoShoot = new AutonomousShoot(roboShoot); // Stupid way to do this but a hot fix for testing 
+  private Command autoCommand = new AutonomousDrive(roboDT, 18);
+  private Command autoShoot = new AutonomousShoot(roboShoot); // Stupid way to do this but a hot fix for testing 
   private XboxController driver = new XboxController(OIConstants.DRIVER_CONTROLLER);
   private XboxController operator = new XboxController(OIConstants.OPERATOR_CONTROLLER);
 
@@ -96,17 +97,18 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {  
-    rightDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.TRIGGER.RIGHT);
-    leftDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.TRIGGER.RIGHT);
+    rightDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.RIGHT);
+    leftDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.LEFT);
     aOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.A);
     yOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.Y);
     xDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.X);
-
-    rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
+    
+    //rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
+    rightDriverTrigger.whenPressed(new ShootPowerCell(roboShoot));
     leftDriverTrigger.whenPressed(new RapidFire(roboIndexer));
     aOperatorButton.whenPressed(new PowerCellSucker(roboHarvest));
     yOperatorButton.whenPressed(new ElevatorGoUp(roboElevator));
-    xDriverButton.whenPressed(new IndexerCaptain(roboIndexer, roboShoot));
+    xDriverButton.whenPressed(new IndexerCaptain(roboIndexer));
   }
 
   /**
@@ -122,7 +124,14 @@ public class RobotContainer {
     } else {
       return autoShoot;
     }
-    
+  }
+
+  public XboxController GetDriverController() {
+    return this.driver;
+  }
+
+  public Shooter GetShooter() {
+    return this.roboShoot;
   }
 
 }

@@ -19,12 +19,14 @@ public class FirePowerCell extends SequentialCommandGroup {
   /**
    * Creates a new FirePowerCell.
    */
-  public FirePowerCell(Shooter robotShooter, Indexer roboIndexer, Harvester roboHarvester) {
+  public FirePowerCell(Shooter roboShooter, Indexer roboIndexer, Harvester roboHarvester) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new ShootPowerCell(robotShooter),
-      new IndexerHarvestMayhem(roboIndexer, roboHarvester, robotShooter)
+      new ShootPowerCell(roboShooter),
+      new IndexerCaptain(roboIndexer),
+      new HarvestMarket(roboHarvester, roboIndexer)
+      //new IndexerHarvestMayhem(roboIndexer, roboHarvester, robotShooter)
     );
   }
 }

@@ -44,7 +44,7 @@ public class Shooter extends SubsystemBase {
   NetworkTableInstance table = NetworkTableInstance.getDefault();
   NetworkTable cameraTable = table.getTable("chameleon-vision").getSubTable("PsThreeCam");
   private NetworkTableEntry targetPose;
-  private double targetArr[] = new double[]{0,0,0};
+  private double targetArr[] = {0,0,0};
   private double x,y,angle = 0;
   private double fudgeFactor = 0; 
   private boolean readyToFire = false;
@@ -65,7 +65,6 @@ public class Shooter extends SubsystemBase {
     SMotorChip.burnFlash();
     SMotorDale.burnFlash();
     // Set Dale to follow Chip, but inverted
-    SMotorDale.restoreFactoryDefaults();
     SMotorDale.follow(SMotorChip,true);
     
     ShooterEncoder = SMotorChip.getEncoder(EncoderType.kQuadrature,GenConstants.REV_ENCODER_CPR);
@@ -83,7 +82,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Current dVal = ", kD);
     SmartDashboard.putNumber("Current ffVal = ", kFF);
     SmartDashboard.putNumber("Shooter Speed = ", motor1ShooterSpeed);
-    SmartDashboard.putNumber("Desired RPM = ",desiredRPM);
+    SmartDashboard.putNumber("Desired RPM = ", desiredRPM);
     SmartDashboard.putBoolean("Value or SetPID:", true); // Set to true for using "Shooter Motor Speed" to control shooter speed
     SmartDashboard.putNumber("XDist", x);
     SmartDashboard.putNumber("yDist", y);
@@ -188,8 +187,9 @@ public class Shooter extends SubsystemBase {
     
   }
 
-  public void  SetShooterSpeed(double speed) {
-    shooterPID.setReference(speed, ControlType.kVelocity);
+  public void SetShooterSpeed(double speed) {
+    //shooterPID.setReference(speed, ControlType.kVelocity);
+    SMotorChip.set(speed);
   }
 
   public boolean AtSpeed(double referenceSpeed) {
