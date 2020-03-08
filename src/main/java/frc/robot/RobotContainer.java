@@ -59,6 +59,7 @@ public class RobotContainer {
   JoystickButton rightDriverTrigger;
   JoystickButton leftDriverTrigger;
   JoystickButton aOperatorButton;
+  JoystickButton bOperatorButton;
   JoystickButton yOperatorButton;
   JoystickButton xDriverButton;
 
@@ -100,15 +101,19 @@ public class RobotContainer {
     rightDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.RIGHT);
     leftDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.LEFT);
     aOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.A);
+    bOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.B);
     yOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.Y);
     xDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.X);
     
     //rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
-    rightDriverTrigger.whenPressed(new ShootPowerCell(roboShoot));
+    rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
     leftDriverTrigger.whenPressed(new RapidFire(roboIndexer));
-    aOperatorButton.whenPressed(new PowerCellSucker(roboHarvest));
-    yOperatorButton.whenPressed(new ElevatorGoUp(roboElevator));
     xDriverButton.whenPressed(new IndexerCaptain(roboIndexer));
+
+    bOperatorButton.whenPressed(new PowerCellSucker(roboHarvest));
+    yOperatorButton.whenPressed(new ElevatorGoUp(roboElevator));
+    //aOperatorButton.whenPressed(new ElevatorGoDOwn(roboElevator));
+
   }
 
   /**

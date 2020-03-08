@@ -8,28 +8,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
+import frc.robot.Robot;
+import frc.robot.subsystems.Elevator;
 
-public class PowerCellSucker extends CommandBase {
-  Harvester roboKirby;
+public class ElevatorGoDown extends CommandBase {
+  Elevator RoboDarth;
   /**
-   * Creates a new PowerCellSucker.
+   * Creates a new ElevatorGoDown.
    */
-  public PowerCellSucker(Harvester roboHarvest) {
-    roboKirby = roboHarvest;
+  public ElevatorGoDown(Elevator roboElevator) {
+    RoboDarth = roboElevator;
+    addRequirements(roboElevator);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(roboHarvest);
   }
 
   // Called when the command is initially scheduled.
-  // Make sure that the Mickey motor does not move if PC in hand
   @Override
   public void initialize() {
-    if (roboKirby.getHarvesterTOF() == true) {
-      roboKirby.setMickeySpeed(0.0);
-    } else {
-      roboKirby.setMickeySpeed(0.25);
-    }
+    RoboDarth.engageRatchet();
+    RoboDarth.setSpeed(-0.25);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,19 +35,19 @@ public class PowerCellSucker extends CommandBase {
   }
 
   // Called once the command ends or is interrupted.
+  // Stop motor
   @Override
   public void end(boolean interrupted) {
-    roboKirby.setMickeySpeed(0.0);
+    RoboDarth.setSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (roboKirby.getHarvesterTOF() == true) {
+    if (RoboDarth.getElevatorEncoder() < 100)
       return true;
     } else {
       return false;
     }
   }
-
 }
