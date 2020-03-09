@@ -10,14 +10,12 @@ package frc.robot.subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants;
-
 import com.playingwithfusion.TimeOfFlight;
 import com.revrobotics.AlternateEncoderType;
 import java.lang.Math;
@@ -45,7 +43,7 @@ public class Indexer extends SubsystemBase {
     IndexerDonaldMotor.restoreFactoryDefaults();
     IndexerDonaldMotor.setSmartCurrentLimit(30);
     IndexerDonaldMotor.setIdleMode(CANSparkMax.IdleMode.kCoast); 
-   // OpticalSensor = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
+    // OpticalSensor = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
     IndexerTOF = new TimeOfFlight(IndexerConstants.INDEXER_TOF);
     alternateEncoder = IndexerDonaldMotor.getAlternateEncoder(kAltEncType, 
                         Constants.GenConstants.REV_ENCODER_CPR);
@@ -84,6 +82,7 @@ public class Indexer extends SubsystemBase {
     return Counts;
 
   }
+  
   /*Publish values we want to look at to dashboard */
   public void UpdateDashboard() {
     currentRotationNT.setDouble(alternateEncoder.getPosition());
@@ -104,7 +103,7 @@ public class Indexer extends SubsystemBase {
     PCArray[2] = inputArray[2];
     PCArray[3] = inputArray[3];
    // PCArray[0] = OpticalSensor.get();
-   PCArray [0] = IndexerTOF.getRange() > 0.1;
+    PCArray [0] = this.getP0();
   }
 
   //Move the indexer motor at a certain speed
@@ -118,7 +117,7 @@ public class Indexer extends SubsystemBase {
 
   //Return value of first position optical sensor
   public boolean getP0(){
-    double distance = IndexerTOF.getRange();
+    double distance = IndexerTOF.getRange(); // in mm
     //return OpticalSensor.get();
     // Because the ball is curved we want to stop when the center of the ball is in front of the sensor hence the range 
     return distance >= 15 && distance <= 25;

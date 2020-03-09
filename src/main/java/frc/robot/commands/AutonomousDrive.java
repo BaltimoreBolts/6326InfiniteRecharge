@@ -42,6 +42,7 @@ public class AutonomousDrive extends CommandBase {
   public void initialize() {
     roboDT.resetEncoders();
     
+    // Reset the variables so our desired change in position is the same everytime and not (desiredPosition) * numberOfCycles
     initialLeftPosition = (int)roboDT.getLeftPosition();
     initialRightPosition = (int)roboDT.getRightPosition();
     desiredLeftPosition = 0;
@@ -66,10 +67,12 @@ public class AutonomousDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // Left encoder counts down so that's why we're doing subtraction 
     desiredLeftPosition = initialLeftPosition - roboDT.inchesToCounts(distToTravel_in, 
     Constants.GenConstants.REV_ENCODER_CPR);
     currentLeftPosition = (int)roboDT.getLeftPosition();
    
+    // Right counts up so you do the addition 
     desiredRightPosition = roboDT.inchesToCounts(distToTravel_in, 
     Constants.GenConstants.REV_ENCODER_CPR) + initialRightPosition;
     currentRightPosition = (int)roboDT.getRightPosition();

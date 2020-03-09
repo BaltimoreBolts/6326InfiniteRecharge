@@ -35,7 +35,6 @@ public class Harvester extends SubsystemBase {
     roboShooter = robotShooter;
     harvesterMickeyMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MICKEY, MotorType.kBrushless);
     harvesterMinnieMotor = new CANSparkMax (HarvesterConstants.HARVESTER_MOTOR_MINNIE, MotorType.kBrushless);
-    harvesterTOF = new TimeOfFlight(HarvesterConstants.HARVESTER_TOF);
     harvesterMickeyMotor.restoreFactoryDefaults();
     harvesterMinnieMotor.restoreFactoryDefaults();
     harvesterMickeyMotor.setSmartCurrentLimit(30);
@@ -43,8 +42,9 @@ public class Harvester extends SubsystemBase {
     harvesterMickeyMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     harvesterMinnieMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
    
-   // LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
-    harvesterRelease = new Relay (0);
+    // LimitSwitch0 = new DigitalInput(HarvesterConstants.HARVESTER_LIMIT_SWITCH);
+    harvesterTOF = new TimeOfFlight(HarvesterConstants.HARVESTER_TOF);
+    harvesterRelease = new Relay(0);
 
     harvesterRelease.set(Relay.Value.kOn);
 

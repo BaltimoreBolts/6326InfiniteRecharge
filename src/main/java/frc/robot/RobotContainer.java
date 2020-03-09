@@ -17,6 +17,7 @@ import frc.robot.commands.ShootPowerCell;
 import frc.robot.commands.AutonomousDrive;
 import frc.robot.commands.AutonomousShoot;
 import frc.robot.commands.ElevatorGoUp;
+import frc.robot.commands.ElevatorGoDown;
 import frc.robot.commands.Autonomous;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Harvester;
@@ -56,8 +57,8 @@ public class RobotContainer {
   private XboxController driver = new XboxController(OIConstants.DRIVER_CONTROLLER);
   private XboxController operator = new XboxController(OIConstants.OPERATOR_CONTROLLER);
 
-  JoystickButton rightDriverTrigger;
-  JoystickButton leftDriverTrigger;
+  JoystickButton rightDriverBumper;
+  JoystickButton leftDriverBumper;
   JoystickButton aOperatorButton;
   JoystickButton bOperatorButton;
   JoystickButton yOperatorButton;
@@ -98,21 +99,22 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {  
-    rightDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.RIGHT);
-    leftDriverTrigger = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.LEFT);
+    rightDriverBumper = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.RIGHT);
+    //leftDriverBumper = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.LEFT);
+    xDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.X);
+
     aOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.A);
     bOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.B);
     yOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.Y);
-    xDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.X);
     
-    //rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
-    rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
-    leftDriverTrigger.whenPressed(new RapidFire(roboIndexer));
+    //rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest)); // Triggers are axis but that's hard
+    rightDriverBumper.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
+    //leftDriverBumper.whenPressed(new RapidFire(roboIndexer));
     xDriverButton.whenPressed(new IndexerCaptain(roboIndexer));
 
     bOperatorButton.whenPressed(new PowerCellSucker(roboHarvest));
     yOperatorButton.whenPressed(new ElevatorGoUp(roboElevator));
-    //aOperatorButton.whenPressed(new ElevatorGoDOwn(roboElevator));
+    aOperatorButton.whenPressed(new ElevatorGoDown(roboElevator));
 
   }
 

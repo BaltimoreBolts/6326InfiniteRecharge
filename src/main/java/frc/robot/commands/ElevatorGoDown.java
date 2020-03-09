@@ -44,7 +44,7 @@ public class ElevatorGoDown extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (RoboDarth.getElevatorEncoder() < 100)
+    if (RoboDarth.getElevatorEncoder() < 0.1) {
       return true;
     } else {
       return false;
