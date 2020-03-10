@@ -26,7 +26,7 @@ public class ElevatorGoDown extends CommandBase {
   @Override
   public void initialize() {
     RoboDarth.engageRatchet();
-    RoboDarth.setSpeed(-0.25);
+    RoboDarth.setSpeed(-0.75);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -44,7 +44,7 @@ public class ElevatorGoDown extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (RoboDarth.getElevatorEncoder() < 0.1) {
+    if (RoboDarth.getElevatorEncoder() < 1) {
       return true;
     } else {
       return false;

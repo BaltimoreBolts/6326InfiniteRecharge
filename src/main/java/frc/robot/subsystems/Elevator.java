@@ -53,11 +53,11 @@ public class Elevator extends SubsystemBase {
   }
 
   public double getElevatorEncoder() {
-    return elevatorEncoder.getPosition();
+    return -elevatorEncoder.getPosition();
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator pos", elevatorEncoder.getPosition());
+    SmartDashboard.putNumber("Elevator pos", -elevatorEncoder.getPosition());
   }
 }

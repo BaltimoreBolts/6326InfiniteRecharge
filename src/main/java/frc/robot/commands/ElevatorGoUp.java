@@ -45,7 +45,7 @@ public class ElevatorGoUp extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (RoboVader.getElevatorEncoder() > 1) {
+    if (RoboVader.getElevatorEncoder() > 3.65) {
       return true;
     } else {
       return false; 
