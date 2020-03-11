@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
@@ -15,6 +16,9 @@ public class IndexerCaptain extends CommandBase {
   Indexer indexerCaptain;
   boolean isEmpty;
   boolean isFull;
+  double encoderValue;
+  double encoderSpeed;
+  double targetPosition;
 
   /**
    * Creates a new IndexerCaptain.
@@ -31,13 +35,15 @@ public class IndexerCaptain extends CommandBase {
   public void initialize() {
     isEmpty = indexerCaptain.getP0();
     isFull = indexerCaptain.isIndexerFull();
-    indexerCaptain.ResetEncoder();
+    encoderValue = indexerCaptain.getEncoderValue();
+    targetPosition = encoderValue + (1.0 / 3.0);
+    //indexerCaptain.ResetEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    indexerCaptain.Movement(-0.35);
+    indexerCaptain.Movement(-0.25);
     /**
     if (!isFull || roboShooter.getReadyToFire()) {
       // Shift the PC's up one level 
@@ -57,7 +63,7 @@ public class IndexerCaptain extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if ((indexerCaptain.getEncoderValue() * 3.0) <= 1.0) {
+    if (indexerCaptain.getEncoderValue() <= targetPosition) {
       return false; 
     } else {
       return true;

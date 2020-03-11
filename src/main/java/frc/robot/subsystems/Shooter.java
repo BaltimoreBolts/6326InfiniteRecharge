@@ -183,6 +183,7 @@ public class Shooter extends SubsystemBase {
     return RPM;
 
   }
+  
   public void getPitch(){
     
   }

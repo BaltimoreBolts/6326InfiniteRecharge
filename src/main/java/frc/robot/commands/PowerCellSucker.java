@@ -12,23 +12,35 @@ import frc.robot.subsystems.*;
 
 public class PowerCellSucker extends CommandBase {
   Harvester roboKirby;
+  double harDir; 
+  boolean section; 
+
   /**
    * Creates a new PowerCellSucker.
    */
-  public PowerCellSucker(Harvester roboHarvest) {
+  public PowerCellSucker(Harvester roboHarvest, double direction, boolean inputSection) {
     roboKirby = roboHarvest;
+    harDir = direction;
+    section = inputSection;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(roboHarvest);
+    addRequirements(roboKirby);
   }
 
   // Called when the command is initially scheduled.
   // Make sure that the Mickey motor does not move if PC in hand
   @Override
   public void initialize() {
+    /*
     if (roboKirby.getHarvesterTOF() == true) {
       roboKirby.setMickeySpeed(0.0);
     } else {
-      roboKirby.setMickeySpeed(0.25);
+      roboKirby.setMickeySpeed(0.25 * harDir);
+    }
+    */
+    if (section) {
+      roboKirby.setMinnieSpeed(0.35 * harDir);
+    } else {
+      roboKirby.setMickeySpeed(0.35 * harDir);
     }
   }
 
@@ -40,17 +52,24 @@ public class PowerCellSucker extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    roboKirby.setMickeySpeed(0.0);
+    if (section) {
+      roboKirby.setMinnieSpeed(0.0);
+    } else {
+      roboKirby.setMickeySpeed(0.0);
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    /* 
     if (roboKirby.getHarvesterTOF() == true) {
       return true;
     } else {
       return false;
     }
+    */ 
+    return false; 
   }
 
 }

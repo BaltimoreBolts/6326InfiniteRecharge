@@ -8,7 +8,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,17 +24,23 @@ import java.lang.Math;
 
 public class Indexer extends SubsystemBase {
   private CANSparkMax IndexerDonaldMotor;
+  private CANPIDController indexerPID;
+  private double kP = 2e-5; 
+  private double kI = 0; 
+  private double kD = 0;
+
   //private DigitalInput OpticalSensor;
   private TimeOfFlight IndexerTOF;
-
   private CANEncoder alternateEncoder;
   private static final AlternateEncoderType kAltEncType = AlternateEncoderType.kQuadrature;
   private boolean PCArray[] = {false,false,false,false};
+
 
   ShuffleboardTab indexerTab;
   NetworkTableEntry desiredRotationNT, currentRotationNT, desiredSpeedNT;
   NetworkTableEntry PCDash0, PCDash1, PCDash2, PCDash3;
   boolean shiftIndexer = false; 
+  double indexerSpeed;
 
 
   /**
@@ -54,6 +62,12 @@ public class Indexer extends SubsystemBase {
     PCArray[2] = false;
     PCArray[3] = false;
 
+    indexerPID = IndexerDonaldMotor.getPIDController();
+    indexerPID.setP(kP);
+    indexerPID.setI(kI);
+    indexerPID.setD(kD); // Kevin Durant is garbage
+    indexerPID.setOutputRange(0, 1.0); // We're position type which is in revolutions so 0 to 1 revolutions? 
+
     ShuffleboardTab indexerTab = Shuffleboard.getTab("Indexer");
     desiredRotationNT = indexerTab.add("Desired Rotation = ", 0).getEntry();
     currentRotationNT = indexerTab.add("Current Rotation = ", 0).getEntry();
@@ -64,6 +78,13 @@ public class Indexer extends SubsystemBase {
     PCDash2 = indexerTab.add("PC2",PCArray[2]).getEntry();
     PCDash3 = indexerTab.add("PC3",PCArray[3]).getEntry();
 
+    indexerSpeed = -0.35; // Debug stuff 
+    SmartDashboard.putNumber("Indexer Speed", indexerSpeed);
+    SmartDashboard.putNumber("Current pVal = ", kP);
+    SmartDashboard.putNumber("Current iVal = ", kI);
+    SmartDashboard.putNumber("Current dVal = ", kD);
+
+    this.ResetEncoder();
   }
 
   @Override
@@ -74,6 +95,7 @@ public class Indexer extends SubsystemBase {
     SmartDashboard.putNumber("Indexer TOF Val", IndexerTOF.getRange());
     SmartDashboard.putNumber("Indexer Encoder", this.getEncoderValue());
     SmartDashboard.putBooleanArray("Indexer Array", PCArray);
+    SmartDashboard.getNumber("Indexer Speed", indexerSpeed);
   }
 
   public int degreeToCounts(double degrees, int CPR ){
@@ -110,6 +132,13 @@ public class Indexer extends SubsystemBase {
   public void Movement (double speed){
     IndexerDonaldMotor.set(speed);
   } 
+
+  public boolean MoveToPosition(double desiredPosition) {
+    // Pass in the position you want to be in, return true / false if you're there? 
+    this.indexerPID.setReference(desiredPosition, ControlType.kPosition);
+
+    return this.getEncoderValue() == desiredPosition;
+  }
 
   public double getEncoderValue(){
     return alternateEncoder.getPosition();
@@ -150,6 +179,11 @@ public class Indexer extends SubsystemBase {
 
   public void ResetEncoder() {
     alternateEncoder.setPosition(0);
+  }
+
+  public double getSpeed() {
+    this.indexerSpeed = SmartDashboard.getNumber("Indexer Speed", 0);
+    return this.indexerSpeed;
   }
 
 }

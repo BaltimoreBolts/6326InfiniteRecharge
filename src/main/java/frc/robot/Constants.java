@@ -50,8 +50,8 @@ public final class Constants {
         public static final int SHOOTER_MOTOR_DALE = 10;
     }
     public static final class HarvesterConstants {
-        public static final int HARVESTER_MOTOR_MICKEY = 5;
-        public static final int HARVESTER_MOTOR_MINNIE = 6;
+        public static final int HARVESTER_MOTOR_MICKEY = 6;
+        public static final int HARVESTER_MOTOR_MINNIE = 5;
         public static final int HARVESTER_LIMIT_SWITCH = 0;
         public static final int HARVESTER_TOF = 11;
 

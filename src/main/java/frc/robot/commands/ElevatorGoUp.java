@@ -25,7 +25,7 @@ public class ElevatorGoUp extends CommandBase {
   @Override
   public void initialize() {
     RoboVader.disengageRatchet();
-    RoboVader.setSpeed(0.25);
+    RoboVader.setSpeed(0.55);
   }
   // Disengages ratchet and engages motor to move lift up
 

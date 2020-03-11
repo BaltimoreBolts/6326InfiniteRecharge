@@ -59,10 +59,14 @@ public class RobotContainer {
 
   JoystickButton rightDriverBumper;
   JoystickButton leftDriverBumper;
+  JoystickButton xDriverButton;
+
   JoystickButton aOperatorButton;
   JoystickButton bOperatorButton;
+  JoystickButton xOperatorButton;
   JoystickButton yOperatorButton;
-  JoystickButton xDriverButton;
+  JoystickButton rightOperatorBumper;
+  JoystickButton leftOperatorBumper;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -105,14 +109,21 @@ public class RobotContainer {
 
     aOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.A);
     bOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.B);
+    xOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.X);
     yOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.Y);
+    rightOperatorBumper = new JoystickButton(operator, Constants.Controller.XBOX.BUMPER.RIGHT);
+    leftOperatorBumper = new JoystickButton(operator, Constants.Controller.XBOX.BUMPER.LEFT);
     
     //rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest)); // Triggers are axis but that's hard
     rightDriverBumper.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
     //leftDriverBumper.whenPressed(new RapidFire(roboIndexer));
     xDriverButton.whenPressed(new IndexerCaptain(roboIndexer));
 
-    bOperatorButton.whenPressed(new PowerCellSucker(roboHarvest));
+    bOperatorButton.whenPressed(new PowerCellSucker(roboHarvest, -1.0, true));
+    xOperatorButton.whenPressed(new PowerCellSucker(roboHarvest, 1.0, true));
+    rightOperatorBumper.whenPressed(new PowerCellSucker(roboHarvest, 1.0, false));
+    leftOperatorBumper.whenPressed(new PowerCellSucker(roboHarvest, -1.0, false));
+
     yOperatorButton.whenPressed(new ElevatorGoUp(roboElevator));
     aOperatorButton.whenPressed(new ElevatorGoDown(roboElevator));
 
