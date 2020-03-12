@@ -25,9 +25,9 @@ import java.lang.Math;
 public class Indexer extends SubsystemBase {
   private CANSparkMax IndexerDonaldMotor;
   private CANPIDController indexerPID;
-  private double kP = 2e-5; 
-  private double kI = 0; 
-  private double kD = 0;
+  private double kP = 0.1; 
+  private double kI = 1e-4; 
+  private double kD = 1;
 
   //private DigitalInput OpticalSensor;
   private TimeOfFlight IndexerTOF;
@@ -39,7 +39,7 @@ public class Indexer extends SubsystemBase {
   ShuffleboardTab indexerTab;
   NetworkTableEntry desiredRotationNT, currentRotationNT, desiredSpeedNT;
   NetworkTableEntry PCDash0, PCDash1, PCDash2, PCDash3;
-  boolean shiftIndexer = false; 
+  boolean shiftIndexer;
   double indexerSpeed;
   double overShoot;
 
@@ -63,7 +63,8 @@ public class Indexer extends SubsystemBase {
     PCArray[2] = false;
     PCArray[3] = false;
 
-    double overShoot = 0;
+    overShoot = 0; 
+    shiftIndexer = false;
 
     indexerPID = IndexerDonaldMotor.getPIDController();
     indexerPID.setP(kP);
@@ -100,6 +101,12 @@ public class Indexer extends SubsystemBase {
     SmartDashboard.putBooleanArray("Indexer Array", PCArray);
     SmartDashboard.getNumber("Indexer Speed", indexerSpeed);
     SmartDashboard.putNumber("Indexer Overshoot", overShoot);
+
+    if (shiftIndexer) {
+      indexerPID.setReference((1.0/3.0), ControlType.kPosition);
+      this.ShiftPCArray(this.getP0());
+      shiftIndexer = false;
+    }
   }
 
   public int degreeToCounts(double degrees, int CPR ){

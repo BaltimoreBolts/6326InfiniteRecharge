@@ -56,7 +56,9 @@ public class Harvester extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putBoolean("Harvester TOF", this.getHarvesterTOF());
     SmartDashboard.putNumber("Harvester TOF Val", harvesterTOF.getRange());
-    if (this.getHarvesterTOF() == true){
+
+    if (this.getHarvesterTOF() == true) {
+      roboIndexer.moveIndexer(true); // If we see a powercell in the harvester, tell the indexer to move. 
         //new IndexerHarvestMayhem(roboIndexer, this, roboShooter);
     }
   }

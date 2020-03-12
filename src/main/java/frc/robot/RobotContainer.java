@@ -117,7 +117,7 @@ public class RobotContainer {
     //rightDriverTrigger.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest)); // Triggers are axis but that's hard
     rightDriverBumper.whenPressed(new FirePowerCell(roboShoot, roboIndexer, roboHarvest));
     //leftDriverBumper.whenPressed(new RapidFire(roboIndexer));
-    //xDriverButton.whenPressed(new IndexerCaptain(roboIndexer));
+    xDriverButton.whenPressed(new IndexerCaptain(roboIndexer));
 
     bOperatorButton.whenPressed(new PowerCellSucker(roboHarvest, -1.0, true));
     xOperatorButton.whenPressed(new PowerCellSucker(roboHarvest, 1.0, true));

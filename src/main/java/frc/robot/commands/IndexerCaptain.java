@@ -39,7 +39,7 @@ public class IndexerCaptain extends CommandBase {
     targetPosition = encoderValue + (1.0 / 3.0);
 
     indexerCaptain.MoveToPosition(targetPosition);
-    indexerCaptain.Movement(-0.15);
+    //indexerCaptain.Movement(-0.15);
     //indexerCaptain.ResetEncoder();
   }
 
@@ -58,10 +58,11 @@ public class IndexerCaptain extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    indexerCaptain.ShiftPCArray(true);
-    indexerCaptain.Movement(0);
-    indexerCaptain.CalculateOvershoot(indexerCaptain.getEncoderValue(), targetPosition);
+    //indexerCaptain.ShiftPCArray(true);
+    //indexerCaptain.Movement(0);
+    //indexerCaptain.CalculateOvershoot(indexerCaptain.getEncoderValue(), targetPosition);
     //roboShooter.SetShooterSpeed(0);
+    indexerCaptain.moveIndexer(true);
   }
 
   // Returns true when the command should end.
@@ -74,7 +75,7 @@ public class IndexerCaptain extends CommandBase {
       return true;
     }
     **/
-
-    return indexerCaptain.MoveToPosition(targetPosition);
+    //return indexerCaptain.MoveToPosition(targetPosition);
+    return true;
   }
 }
