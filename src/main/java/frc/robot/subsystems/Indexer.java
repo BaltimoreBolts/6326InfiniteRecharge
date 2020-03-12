@@ -41,6 +41,7 @@ public class Indexer extends SubsystemBase {
   NetworkTableEntry PCDash0, PCDash1, PCDash2, PCDash3;
   boolean shiftIndexer = false; 
   double indexerSpeed;
+  double overShoot;
 
 
   /**
@@ -50,7 +51,7 @@ public class Indexer extends SubsystemBase {
     IndexerDonaldMotor = new CANSparkMax (IndexerConstants.INDEXER_MOTOR_DONALD, MotorType.kBrushless);
     IndexerDonaldMotor.restoreFactoryDefaults();
     IndexerDonaldMotor.setSmartCurrentLimit(30);
-    IndexerDonaldMotor.setIdleMode(CANSparkMax.IdleMode.kCoast); 
+    IndexerDonaldMotor.setIdleMode(CANSparkMax.IdleMode.kBrake); 
     // OpticalSensor = new DigitalInput(IndexerConstants.INDEXER_LIMIT_SWITCH1);
     IndexerTOF = new TimeOfFlight(IndexerConstants.INDEXER_TOF);
     alternateEncoder = IndexerDonaldMotor.getAlternateEncoder(kAltEncType, 
@@ -61,6 +62,8 @@ public class Indexer extends SubsystemBase {
     PCArray[1] = false;
     PCArray[2] = false;
     PCArray[3] = false;
+
+    double overShoot = 0;
 
     indexerPID = IndexerDonaldMotor.getPIDController();
     indexerPID.setP(kP);
@@ -96,6 +99,7 @@ public class Indexer extends SubsystemBase {
     SmartDashboard.putNumber("Indexer Encoder", this.getEncoderValue());
     SmartDashboard.putBooleanArray("Indexer Array", PCArray);
     SmartDashboard.getNumber("Indexer Speed", indexerSpeed);
+    SmartDashboard.putNumber("Indexer Overshoot", overShoot);
   }
 
   public int degreeToCounts(double degrees, int CPR ){
@@ -153,7 +157,7 @@ public class Indexer extends SubsystemBase {
   }
 
   //For testing, this will be disabled later
-  public double getdesiredSpeed(){
+  public double getdesiredSpeed() {
     return desiredSpeedNT.getDouble(0);
   }
 
@@ -184,6 +188,14 @@ public class Indexer extends SubsystemBase {
   public double getSpeed() {
     this.indexerSpeed = SmartDashboard.getNumber("Indexer Speed", 0);
     return this.indexerSpeed;
+  }
+
+  public void CalculateOvershoot(double encoderVal, double desiredPosition) {
+    overShoot = encoderVal - desiredPosition;
+  }
+
+  public double GetOvershoot() {
+    return overShoot;
   }
 
 }

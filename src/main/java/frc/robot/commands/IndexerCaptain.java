@@ -37,13 +37,16 @@ public class IndexerCaptain extends CommandBase {
     isFull = indexerCaptain.isIndexerFull();
     encoderValue = indexerCaptain.getEncoderValue();
     targetPosition = encoderValue + (1.0 / 3.0);
+
+    indexerCaptain.MoveToPosition(targetPosition);
+    indexerCaptain.Movement(-0.15);
     //indexerCaptain.ResetEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    indexerCaptain.Movement(-0.25);
+    //indexerCaptain.Movement(-0.15);
     /**
     if (!isFull || roboShooter.getReadyToFire()) {
       // Shift the PC's up one level 
@@ -57,16 +60,21 @@ public class IndexerCaptain extends CommandBase {
   public void end(boolean interrupted) {
     indexerCaptain.ShiftPCArray(true);
     indexerCaptain.Movement(0);
+    indexerCaptain.CalculateOvershoot(indexerCaptain.getEncoderValue(), targetPosition);
     //roboShooter.SetShooterSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (indexerCaptain.getEncoderValue() <= targetPosition) {
+    /**
+    if (indexerCaptain.getEncoderValue() <= (targetPosition - indexerCaptain.GetOvershoot())) {
       return false; 
     } else {
       return true;
     }
+    **/
+
+    return indexerCaptain.MoveToPosition(targetPosition);
   }
 }
