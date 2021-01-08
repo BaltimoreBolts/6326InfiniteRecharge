@@ -40,7 +40,7 @@ public class Indexer extends SubsystemBase {
   NetworkTableEntry desiredRotationNT, currentRotationNT, desiredSpeedNT;
   NetworkTableEntry PCDash0, PCDash1, PCDash2, PCDash3;
   boolean shiftIndexer = false; 
-  double indexerSpeed;
+  private double indexerSpeed = 0;
   double overShoot;
 
 
@@ -81,7 +81,7 @@ public class Indexer extends SubsystemBase {
     PCDash2 = indexerTab.add("PC2",PCArray[2]).getEntry();
     PCDash3 = indexerTab.add("PC3",PCArray[3]).getEntry();
 
-    indexerSpeed = -0.35; // Debug stuff 
+    //indexerSpeed = 0; // Debug stuff 
     SmartDashboard.putNumber("Indexer Speed", indexerSpeed);
     SmartDashboard.putNumber("Current pVal = ", kP);
     SmartDashboard.putNumber("Current iVal = ", kI);
@@ -94,12 +94,15 @@ public class Indexer extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     UpdateDashboard();
+  
     SmartDashboard.putBoolean("Indexer TOF", this.getP0());
     SmartDashboard.putNumber("Indexer TOF Val", IndexerTOF.getRange());
     SmartDashboard.putNumber("Indexer Encoder", this.getEncoderValue());
     SmartDashboard.putBooleanArray("Indexer Array", PCArray);
-    SmartDashboard.getNumber("Indexer Speed", indexerSpeed);
+    indexerSpeed = SmartDashboard.getNumber("Indexer Speed", 0);
     SmartDashboard.putNumber("Indexer Overshoot", overShoot);
+
+    IndexerDonaldMotor.set(indexerSpeed);
   }
 
   public int degreeToCounts(double degrees, int CPR ){
