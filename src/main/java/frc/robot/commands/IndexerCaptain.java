@@ -23,10 +23,10 @@ public class IndexerCaptain extends CommandBase {
   /**
    * Creates a new IndexerCaptain.
    */
-  public IndexerCaptain(Indexer inputIndexer) {
+  public IndexerCaptain(final Indexer inputIndexer) {
     // Use addRequirements() here to declare subsystem dependencies.
     indexerCaptain = inputIndexer;
-    //roboShooter = inputShooter;
+    // roboShooter = inputShooter;
     addRequirements(indexerCaptain);
   }
 
@@ -40,24 +40,22 @@ public class IndexerCaptain extends CommandBase {
 
     indexerCaptain.MoveToPosition(targetPosition);
     indexerCaptain.Movement(-0.15);
-    //indexerCaptain.ResetEncoder();
+    // indexerCaptain.ResetEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //indexerCaptain.Movement(-0.15);
+    // indexerCaptain.Movement(-0.15);
     /**
-    if (!isFull || roboShooter.getReadyToFire()) {
-      // Shift the PC's up one level 
-     indexerCaptain.Movement(-0.25); 
-    }
-    **/
+     * if (!isFull || roboShooter.getReadyToFire()) { // Shift the PC's up one level
+     * indexerCaptain.Movement(-0.25); }
+     **/
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(final boolean interrupted) {
     indexerCaptain.ShiftPCArray(true);
     indexerCaptain.Movement(0);
     indexerCaptain.CalculateOvershoot(indexerCaptain.getEncoderValue(), targetPosition);

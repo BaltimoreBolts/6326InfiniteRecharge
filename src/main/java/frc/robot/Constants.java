@@ -55,6 +55,9 @@ public final class Constants {
         public static final int HARVESTER_LIMIT_SWITCH = 0;
         public static final int HARVESTER_TOF = 11;
 
+        // tof is the time of flight sensor
+    
+
     }
     public static final class IndexerConstants {
         public static final int INDEXER_MOTOR_DONALD = 7;
