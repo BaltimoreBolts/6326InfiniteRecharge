@@ -18,6 +18,7 @@ public class moveIndexer extends CommandBase {
   double desiredPosition = 0;
   double initialPosition= 0;
   double degreesToRotate = 120;
+  int n = 0;
   /**
    * Creates a new moveIndexer.
    */
@@ -50,11 +51,10 @@ public class moveIndexer extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    /*If we have hit or gone past our desired encoder position, stop
-    ** Note! Need to make sure signs/directions are correct or we will
-    ** never stop*/
-    desiredPosition = roboIndexer.degreeToCounts(degreesToRotate, 
-      Constants.GenConstants.REV_ENCODER_CPR)+initialPosition;
+
+    /*Upwards is positive encoder, but the speed is negative to go up*/
+    desiredPosition = degreesToRotate/360.0+initialPosition;
+    
     currentPosition = roboIndexer.getEncoderValue();
     if (currentPosition >= desiredPosition){
       return true;

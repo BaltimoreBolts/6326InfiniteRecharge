@@ -18,6 +18,7 @@ import frc.robot.commands.AutonomousDrive;
 import frc.robot.commands.AutonomousShoot;
 import frc.robot.commands.ElevatorGoUp;
 import frc.robot.commands.ElevatorGoDown;
+import frc.robot.commands.moveIndexer;
 import frc.robot.commands.Autonomous;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Harvester;
@@ -60,6 +61,7 @@ public class RobotContainer {
   JoystickButton rightDriverBumper;
   JoystickButton leftDriverBumper;
   JoystickButton xDriverButton;
+  JoystickButton aDriverButton;
 
   JoystickButton aOperatorButton;
   JoystickButton bOperatorButton;
@@ -106,6 +108,7 @@ public class RobotContainer {
     rightDriverBumper = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.RIGHT);
     //leftDriverBumper = new JoystickButton(driver, Constants.Controller.XBOX.BUMPER.LEFT);
     xDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.X);
+    aDriverButton = new JoystickButton(driver, Constants.Controller.XBOX.A);
 
     aOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.A);
     bOperatorButton = new JoystickButton(operator, Constants.Controller.XBOX.B);
@@ -126,6 +129,9 @@ public class RobotContainer {
 
     yOperatorButton.whenPressed(new ElevatorGoUp(roboElevator));
     aOperatorButton.whenPressed(new ElevatorGoDown(roboElevator));
+
+    //Testing Indexer rotation
+    aDriverButton.whenPressed(new moveIndexer(roboIndexer));
 
   }
 
